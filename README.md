@@ -2,12 +2,12 @@
 
 Group Members| Github |
 ------------- | -------------
-Alana Gilston  | abluescarab |
-Alex Harris  | LazG7 |
-Alissa Friel | xuvea |
-Evan La Fleur | evanlafleur |
-Henry Kaus | henrykaus |
-Nate Callon | ncallonpsu |
+Alana Gilston  | [abluescarab](https://github.com/abluescarab) |
+Alex Harris  | [LazG7](https://github.com/LazG7) |
+Alissa Friel | [xuvea](https://github.com/xuvea) |
+Evan La Fleur | [evanlafleur](https://github.com/evanlafleur) |
+Henry Kaus | [henrykaus](https://github.com/henrykaus) |
+Nate Callon | [ncallonpsu](https://github.com/ncallonpsu) |
 
 ## Brief Description ##
 
