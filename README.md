@@ -10,5 +10,6 @@ Henry Kaus | [henrykaus](https://github.com/henrykaus) |
 Nate Callon | [ncallonpsu](https://github.com/ncallonpsu) |
 
 ## Brief Description ##
+**Chocoholics Anonymous**, or ChocAn, is a service that provides support and rehabilitation for chocolate addicts. Our term project is to design a system that allows employees to manage, provide, and bill services to ChocAn members.
 
 ## How to Compile/Run ##
