@@ -30,9 +30,9 @@ class Person:
         with open(file, "w") as f:
             json.dump(self.__dict__, f, indent=4, sort_keys=False)
 
-    def load(self, id=""):
+    def load(self, id=0):
         """Load the person from disk with a given ID."""
-        if id == "":
+        if id == 0:
             id = self.id
 
         file = self.get_file(id)
