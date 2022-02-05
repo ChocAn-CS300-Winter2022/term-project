@@ -10,8 +10,11 @@ class ChocAn:
 
         path = Path(".") / "restricted" / "provider_directory.json"
 
-        with open(path, 'r') as file:
-            self.provider_directory = json.load(file)
+        if not path.is_file():
+            print("Failed to load provider directory.")
+        else:
+            with open(path, 'r') as file:
+                self.provider_directory = json.load(file)
 
     def begin(self):
         quit = False
