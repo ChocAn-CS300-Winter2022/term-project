@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+from chocan import utils
+
 
 class Person:
     def __init__(self, id="", name="", address="", city="", state="",
@@ -22,26 +24,27 @@ class Person:
 
     def save(self):
         """Save the person to disk."""
-        file = self.get_file(self.id)
+        path = self.get_file(self.id)
 
-        if file.is_dir() or file.is_symlink():
+        if not utils.check_file(path):
             print(f"Could not write person with ID {self.id} to disk.")
+            return
 
-        with open(file, "w") as f:
-            json.dump(self.__dict__, f, indent=4, sort_keys=False)
+        with open(path, "w") as file:
+            json.dump(self.__dict__, file, indent=4, sort_keys=False)
 
     def load(self, id=""):
         """Load the person from disk with a given ID."""
         if id == "":
             id = self.id
 
-        file = self.get_file(id)
+        path = self.get_file(id)
 
-        if not file.is_file():
+        if not path.is_file():
             print(f"Could not load person with ID {id} from disk.")
             return
 
-        with open(file, 'r') as file:
+        with open(path, 'r') as file:
             self.__dict__.update(json.load(file))
 
     @staticmethod
