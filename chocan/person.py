@@ -54,6 +54,7 @@ class Person:
 
     @staticmethod
     def get_folder(id):
+        """Get the folder that the person is stored in."""
         if str(id).startswith("8"):
             return "providers"
         elif str(id).startswith("9"):
