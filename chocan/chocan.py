@@ -12,9 +12,11 @@ class ChocAn:
 
         if not path.is_file():
             print("Failed to load provider directory.")
-        else:
-            with open(path, 'r') as file:
-                self.provider_directory = json.load(file)
+            return
+
+        with open(path, 'r') as file:
+            self.provider_directory = json.load(file)
+
 
     def begin(self):
         quit = False
@@ -70,5 +72,3 @@ class ChocAn:
                     self.menu.page = Menu.MenuPage.FirstLoad
                 else:
                     print("Invalid command, Please Try Again.")
-
-        print("Exiting...")
