@@ -3,15 +3,15 @@ from pathlib import Path
 
 
 class Person:
-    def __init__(self, id="000000000", name="", address="", city="", state="",
-        zip_code="00000"):
+    def __init__(self, id=0, name="", address="", city="", state="",
+        zip_code=0):
         """Create a new instance of Person."""
-        self.id = int(id[:9])
+        self.id = int(str(id)[:9])
         self.name = name[:25]
         self.address = address[:25]
         self.city = city[:14]
         self.state = state[:2]
-        self.zip_code = int(zip_code[:5])
+        self.zip_code = int(str(zip_code)[:5])
 
     def display(self):
         """Display the person on the command line."""
@@ -22,14 +22,7 @@ class Person:
 
     def save(self):
         """Save the person to disk."""
-        if self.id.startswith("8"):
-            folder = "providers"
-        elif self.id.startswith("9"):
-            folder = "managers"
-        else:
-            folder = "members"
-
-        file = Path(".") / "restricted" / "users" / folder / f"{self.id}.json"
+        file = self.get_file(self.id)
 
         if file.is_dir() or file.is_symlink():
             print(f"Could not write person with ID {self.id} to disk.")
@@ -42,8 +35,7 @@ class Person:
         if id == "":
             id = self.id
 
-        file = Path(".") / "restricted" / "users" / self.get_folder(id) /\
-            f"{id}.json"
+        file = self.get_file(id)
 
         if not file.is_file():
             print(f"Could not load person with ID {id} from disk.")
@@ -53,11 +45,13 @@ class Person:
             self.__dict__.update(json.load(file))
 
     @staticmethod
-    def get_folder(id):
-        """Get the folder that the person is stored in."""
+    def get_file(id):
+        """Get the file that the person is stored in."""
         if str(id).startswith("8"):
-            return "providers"
+            folder = "providers"
         elif str(id).startswith("9"):
-            return "managers"
+            folder = "managers"
+        else:
+            folder = "members"
 
-        return "members"
+        return Path(".") / "restricted" / "users" / folder / f"{id}.json"
