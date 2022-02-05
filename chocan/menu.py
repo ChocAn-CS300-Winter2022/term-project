@@ -1,6 +1,6 @@
 '''
 This file contains the menu system and various components to
-enable fluid navigation through the ChocAn system
+enable fluid navigation through the ChocAn system.
 '''
 
 from enum import Enum
@@ -24,14 +24,12 @@ class Menu:
 
     def display(self):
         """Display the menu system."""
-        #TODO Testing input
         print("Pick a number 1-4 - though we don't actually do anything with it"
               " yet")
 
-        #TODO refer to the crash-course and design doc on what to put here...
-        #This could be cut smaller by combining the last elif into the provider
-        #main some how? it also doesn't hurt to just have double menu in manager
-        #I suppose?
+        #TODO Adjust the firstload and login to be elsewhere so a flag can be
+        #used to properly identify HOW to display the menu and make this a
+        #little cleaner.
         if self.page == Menu.MenuPage.FirstLoad:
             print("first load")
         elif self.page == Menu.MenuPage.Login:
