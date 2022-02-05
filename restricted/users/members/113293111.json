@@ -1,8 +1,8 @@
 {
-    "id": 113293111,
+    "id": "113293111",
     "name": "John Smith",
     "address": "123 Main St.",
     "city": "Los Angeles",
     "state": "CA",
-    "zip_code": 90001
+    "zip_code": "90001"
 }
