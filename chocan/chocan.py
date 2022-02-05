@@ -1,8 +1,17 @@
+import json
+from pathlib import Path
+
 from chocan.menu import Menu
+
 
 class ChocAn:
     def __init__(self):
         self.menu = Menu()
+
+        path = Path(".") / "restricted" / "provider_directory.json"
+
+        with open(path, 'r') as file:
+            self.provider_directory = json.load(file)
 
     def begin(self):
         quit = False
