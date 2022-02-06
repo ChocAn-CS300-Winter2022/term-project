@@ -1,7 +1,10 @@
 import json
 from pathlib import Path
+# from datetime import datetime
 
 from chocan.menu import Menu
+# from chocan.person import Person
+# from chocan.service import Service
 
 
 class ChocAn:
@@ -9,6 +12,12 @@ class ChocAn:
         self.menu = Menu()
 
         path = Path(".") / "restricted" / "provider_directory.json"
+
+        # person = Person()
+        # person.load("113293111")
+        # service = Service(datetime.now().date(), person, person, "Acupuncture",
+        #     "Test.")
+        # service.generate_bill(self.provider_directory)
 
         if not path.is_file():
             print("Failed to load provider directory.")

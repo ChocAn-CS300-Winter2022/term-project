@@ -37,7 +37,7 @@ class Service:
 
     # Do we want to generate reports from the Service class directly, instead
     # of having another class called Reports?
-    def generate_report(self):
+    def generate_member_report(self):
         pass
 
     def generate_provider_report(self):

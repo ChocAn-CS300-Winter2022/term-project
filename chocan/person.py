@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
-from datetime import date
+# from datetime import date
 
 from chocan import utils
-from chocan.service import Service
+# from chocan.service import Service
 
 
 class Person:
@@ -16,7 +16,6 @@ class Person:
         self.city = city[:14]
         self.state = state[:2]
         self.zip_code = zip_code[:5]
-        self.services = []
 
     # Should we delete? Without extra functionality like displaying a message,
     # The same can be accomplished by calling my_person.services.append()
@@ -62,11 +61,4 @@ class Person:
     @staticmethod
     def get_file(id):
         """Get the file that the person is stored in."""
-        if id.startswith("8"):
-            folder = "providers"
-        elif id.startswith("9"):
-            folder = "managers"
-        else:
-            folder = "members"
-
-        return Path(".") / "restricted" / "users" / folder / f"{id}.json"
+        return Path(".") / "restricted" / "users" / f"{id}.json"

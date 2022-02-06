@@ -32,7 +32,7 @@ class Menu:
         #TODO Adjust the firstload and login to be elsewhere so a flag can be
         #used to properly identify HOW to display the menu and make this a
         #little cleaner.
-        #TODO "Draft bill" does not do anything yet... 
+        #TODO "Draft bill" does not do anything yet...
         #TODO "Add Subsystem for Interactive Menu Items"
         if self.page == Menu.MenuPage.FirstLoad:
             print(30 * "=", "Menu", 30 * "=")
@@ -42,7 +42,7 @@ class Menu:
             print("4) Reports")
             print("0) Log Off")
             print(67 * "=")
-        elif self.page == Menu.MenuPage.RequestInformation:  
+        elif self.page == Menu.MenuPage.RequestInformation:
             print("1) Request Member Information")
             print("2) Request Provider Information")
             print("3) Request Available Services")
@@ -58,6 +58,5 @@ class Menu:
             print("3) Weekly Provder Report")
             print("4) EFT Report")
             print("0) Main Menu")
-
 
         return input("> ")
