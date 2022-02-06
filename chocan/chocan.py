@@ -29,18 +29,26 @@ class ChocAn:
                     self.menu.page = Menu.MenuPage.ManagerTerminal
                 elif command == "0":
                     quit = True
-            elif (self.menu.page == Menu.MenuPage.ProviderTerminal or
-                  self.menu.page == Menu.MenuPage.ManagerTerminal):
+                else:
+                    print("Invalid command. Please try again.")
+            elif self.menu.page == Menu.MenuPage.ProviderTerminal:
                 if command == "1":
                     self.menu.page = Menu.MenuPage.Services
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.LogIn
-
-                if self.menu.page == Menu.MenuPage.ManagerTerminal:
-                    if command == "2":
-                        self.menu.page = Menu.MenuPage.UserInformation
-                    elif command == "3":
-                        self.menu.page = Menu.MenuPage.Reports
+                else:
+                    print("Invalid command. Please try again.")
+            elif self.menu.page == Menu.MenuPage.ManagerTerminal:
+                if command == "1":
+                    self.menu.page = Menu.MenuPage.Services
+                elif command == "0":
+                    self.menu.page = Menu.MenuPage.LogIn
+                elif command == "2":
+                    self.menu.page = Menu.MenuPage.UserInformation
+                elif command == "3":
+                    self.menu.page = Menu.MenuPage.Reports
+                else:
+                    print("Invalid command. Please try again.")
             elif self.menu.page == Menu.MenuPage.Services:
                 if command == "1":
                     print("View provider directory")
@@ -49,6 +57,8 @@ class ChocAn:
                 elif command == "0":
                     # TODO: Determine whether provider or manager
                     self.menu.page = Menu.MenuPage.ManagerTerminal
+                else:
+                    print("Invalid command. Please try again.")
             elif self.menu.page == Menu.MenuPage.UserInformation:
                 if command == "1":
                     print("Add member")
@@ -65,6 +75,8 @@ class ChocAn:
                 elif command == "0":
                     # TODO: Determine whether provider or manager
                     self.menu.page = Menu.MenuPage.ManagerTerminal
+                else:
+                    print("Invalid command. Please try again.")
             elif self.menu.page == Menu.MenuPage.Reports:
                 if command == "1":
                     print("Generate summary report")
@@ -75,3 +87,5 @@ class ChocAn:
                 elif command == "0":
                     # TODO: Determine whether provider or manager
                     self.menu.page = Menu.MenuPage.ManagerTerminal
+                else:
+                    print("Invalid command. Please try again.")
