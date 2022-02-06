@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from datetime import date
 
 from chocan import utils
 from chocan.service import Service
@@ -20,12 +21,12 @@ class Person:
     # Should we delete? Without extra functionality like displaying a message,
     # The same can be accomplished by calling my_person.services.append()
     # in the calling code.
-    def add_service(date_provided: datetime.date, provider, member,
+    def add_service(self, date_provided: date, provider, member,
             service_name, comments=""):
         """Add a service to the person."""
         self.services.append(Service(date_provided, provider, member,
             service_name, comments))
-        
+
     def display(self):
         """Display the person on the command line."""
         print(f"---- ID: {self.id} ----")
