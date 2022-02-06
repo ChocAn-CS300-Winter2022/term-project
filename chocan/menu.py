@@ -12,15 +12,17 @@ class Menu:
     #enum the options to give visible description when being checked against
     #other parts of the system.
     class MenuPage(Enum):
-        FirstLoad = 1
-        RequestInformation = 2
-        Services = 3
-        Reports = 4
+        LogIn = 1
+        ProviderTerminal = 2
+        ManagerTerminal = 3
+        UserInformation = 4
+        Services = 5
+        Reports = 6
 
     #Menu constructor - using page inspiried by Alana's teachings
     def __init__(self):
         """Create a new Menu instance."""
-        self.page = Menu.MenuPage.FirstLoad
+        self.page = Menu.MenuPage.LogIn
         self.people = []
         self.reports = []
 
@@ -28,36 +30,43 @@ class Menu:
         """Display the menu system."""
         print()
 
-        #TODO Adjust the firstload and login to be elsewhere so a flag can be
-        #used to properly identify HOW to display the menu and make this a
-        #little cleaner.
-        #TODO "Draft bill" does not do anything yet...
-        #TODO "Add Subsystem for Interactive Menu Items"
-        if self.page == Menu.MenuPage.FirstLoad:
-            print(" Menu ".center(67, "="))
-            print("1) Draft a bill")
-            print("2) Request information")
-            print("3) Manage services")
-            print("4) Reports")
+        if self.page == Menu.MenuPage.LogIn:
+            print(" Chocoholics Anonymous ".center(67, "="))
+            print("1) Log in")
+            print("0) Exit")
+        elif (self.page == Menu.MenuPage.ProviderTerminal or
+              self.page == Menu.MenuPage.ManagerTerminal):
+            # provider or manager
+            print(" Main Menu ".center(67, "="))
+            print("1) Manage services")
+
+            if self.page == Menu.MenuPage.ManagerTerminal:
+                # only manager
+                print("2) Member or provider information")
+                print("3) Reports")
+
             print("0) Log off")
-        elif self.page == Menu.MenuPage.RequestInformation:
-            print(" Request Information ".center(67, "="))
-            print("1) Request member information")
-            print("2) Request provider information")
-            print("3) Request available services")
-            print("0) Back")
         elif self.page == Menu.MenuPage.Services:
             print(" Services ".center(67, "="))
-            print("1) Member services")
-            print("2) Provider services")
-            print("3) Service modifications")
+            print("1) View provider directory")
+            print("2) Add service record")
+            print("0) Back")
+        elif self.page == Menu.MenuPage.UserInformation:
+            print(" User Information ".center(67, "="))
+            print(" Member ".center(67, "-"))
+            print("1) Add member")
+            print("2) Remove member")
+            print("3) Modify member")
+            print(" Provider ".center(67, "-"))
+            print("4) Add provider")
+            print("5) Remove provider")
+            print("6) Modify provider")
             print("0) Back")
         elif self.page == Menu.MenuPage.Reports:
             print(" Reports ".center(67, "="))
-            print("1) Summary report")
-            print("2) Member report")
-            print("3) Weekly provider report")
-            print("4) EFT report")
+            print("1) Generate summary report")
+            print("2) Generate member report")
+            print("3) Generate provider report")
             print("0) Back")
 
         print(67 * "=")
