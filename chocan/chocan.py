@@ -17,7 +17,7 @@ class ChocAn:
         with open(path, 'r') as file:
             self.provider_directory = json.load(file)
 
-    def begin(self):
+    def run(self):
         quit = False
 
         while not quit:

@@ -4,4 +4,4 @@ from chocan.chocan import ChocAn
 
 if __name__ == "__main__":
     program = ChocAn()
-    program.begin()
+    program.run()
