@@ -17,7 +17,6 @@ class Menu:
         InteractiveMenu = 3
         Reports = 4
 
-
     #Menu constructor - using page inspiried by Alana's teachings
     def __init__(self):
         """Create a new Menu instance."""

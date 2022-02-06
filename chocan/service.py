@@ -15,8 +15,8 @@ class Service:
         self.service_name = service_name
         self.comments = comments[:100]
 
-    def generate_bill(self, provider_directory):
-        bill = {
+    def generate_record(self, provider_directory):
+        record = {
             "current_date": self.current_date.strftime("%m-%d-%Y %H:%M:%S"),
             "date_provided": self.date_provided.strftime("%m-%d-%Y"),
             "provider": self.provider.id,
@@ -29,11 +29,11 @@ class Service:
         path = Path(".") / "restricted" / "logs" / filename
 
         if not utils.check_file(path):
-            print("Could not write bill to disk.")
+            print("Could not write record to disk.")
             return
 
         with open(path, "w") as file:
-            json.dump(bill, file, indent=4, sort_keys=False)
+            json.dump(record, file, indent=4, sort_keys=False)
 
     # Do we want to generate reports from the Service class directly, instead
     # of having another class called Reports?
