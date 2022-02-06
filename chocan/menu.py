@@ -14,7 +14,7 @@ class Menu:
     class MenuPage(Enum):
         FirstLoad = 1
         RequestInformation = 2
-        InteractiveMenu = 3
+        Services = 3
         Reports = 4
 
     #Menu constructor - using page inspiried by Alana's teachings
@@ -34,28 +34,32 @@ class Menu:
         #TODO "Draft bill" does not do anything yet...
         #TODO "Add Subsystem for Interactive Menu Items"
         if self.page == Menu.MenuPage.FirstLoad:
-            print(30 * "=", "Menu", 30 * "=")
+            print(" Menu ".center(67, "="))
             print("1) Draft a bill")
-            print("2) Request Information")
-            print("3) Interactive Menu")
+            print("2) Request information")
+            print("3) Manage services")
             print("4) Reports")
-            print("0) Log Off")
-            print(67 * "=")
+            print("0) Log off")
         elif self.page == Menu.MenuPage.RequestInformation:
-            print("1) Request Member Information")
-            print("2) Request Provider Information")
-            print("3) Request Available Services")
-            print("0) Main Menu")
-        elif self.page == Menu.MenuPage.InteractiveMenu:
-            print("1) Member Services")
-            print("2) Provider Services")
-            print("3) Service Modifications")
-            print("0) Main Menu")
+            print(" Request Information ".center(67, "="))
+            print("1) Request member information")
+            print("2) Request provider information")
+            print("3) Request available services")
+            print("0) Back")
+        elif self.page == Menu.MenuPage.Services:
+            print(" Services ".center(67, "="))
+            print("1) Member services")
+            print("2) Provider services")
+            print("3) Service modifications")
+            print("0) Back")
         elif self.page == Menu.MenuPage.Reports:
-            print("1) Summary Report")
-            print("2) Member Report")
-            print("3) Weekly Provder Report")
-            print("4) EFT Report")
-            print("0) Main Menu")
+            print(" Reports ".center(67, "="))
+            print("1) Summary report")
+            print("2) Member report")
+            print("3) Weekly provider report")
+            print("4) EFT report")
+            print("0) Back")
+
+        print(67 * "=")
 
         return input("> ")

@@ -29,7 +29,7 @@ class ChocAn:
                 elif command == "2":
                     self.menu.page = Menu.MenuPage.RequestInformation
                 elif command == "3":
-                    self.menu.page = Menu.MenuPage.InteractiveMenu
+                    self.menu.page = Menu.MenuPage.Services
                 elif command == "4":
                     self.menu.page = Menu.MenuPage.Reports
                 elif command == "0":
@@ -47,7 +47,7 @@ class ChocAn:
                     self.menu.page = Menu.MenuPage.FirstLoad
                 else:
                     print("Invalid command, Please Try Again.")
-            elif self.menu.page == Menu.MenuPage.InteractiveMenu:
+            elif self.menu.page == Menu.MenuPage.Services:
                 if command == "1":
                     print("Add member sub menu")
                 elif command == "2":
