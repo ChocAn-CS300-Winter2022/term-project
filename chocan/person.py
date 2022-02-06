@@ -45,7 +45,11 @@ class Person:
             json.dump(self.__dict__, file, indent=4, sort_keys=False)
 
     def load(self, id=""):
-        """Load the person from disk with a given ID."""
+        """Load the person from disk with a given ID.
+
+        Args:
+            id (str, optional): the ID to load from disk. Defaults to self.id.
+        """
         if id == "":
             id = self.id
 

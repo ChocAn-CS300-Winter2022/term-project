@@ -15,6 +15,9 @@ class Service:
         self.service_name = service_name
         self.comments = comments[:100]
 
+    def display(self):
+        pass
+
     def generate_record(self, provider_directory):
         record = {
             "current_date": self.current_date.strftime("%m-%d-%Y %H:%M:%S"),
@@ -25,7 +28,11 @@ class Service:
             "comments": self.comments
         }
 
-        filename = self.current_date.strftime("%m-%d-%Y_%H-%M-%S") + ".json"
+        # filename = 111111111_888888888_2022-01-01_00:00:00.json
+        filename = (f"{self.provider.id}_{self.member.id}_"
+                    f"{self.current_date.strftime('%Y-%m-%d_%H-%M-%S')}"
+                    f".json")
+
         path = Path(".") / "restricted" / "logs" / filename
 
         if not utils.check_file(path):
