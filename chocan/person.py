@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from chocan import utils
+from chocan.service import Service
 
 
 class Person:
@@ -14,6 +15,13 @@ class Person:
         self.city = city[:14]
         self.state = state[:2]
         self.zip_code = zip_code[:5]
+        self.services = []
+
+    def addService(date_provided: datetime.date, provider, member,
+        service_name, comments="")
+        self.services.append(Service(date_provided, provider, member,
+        service_name, comments))
+        
 
     def display(self):
         """Display the person on the command line."""
