@@ -26,3 +26,16 @@ def check_file(file: Path):
 
     # Otherwise, we can continue.
     return True
+
+
+def confirmation(message):
+    """Ask the user to confirm an action.
+
+    Args:
+        message (str): message to display to the user.
+
+    Returns:
+        bool: True if yes; False if no
+    """
+    confirmation = input(f"{message} (y/n) ").lower()
+    return confirmation == "yes" or confirmation == "y"
