@@ -18,6 +18,7 @@ class ChocAn:
             self.provider_directory = json.load(file)
 
     def run(self):
+        """Run the ChocAn program."""
         quit = False
 
         while not quit:
