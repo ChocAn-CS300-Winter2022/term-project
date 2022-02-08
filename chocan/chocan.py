@@ -51,7 +51,7 @@ class ChocAn:
                     print("Invalid command. Please try again.")
             elif self.menu.page == Menu.MenuPage.Services:
                 if command == "1":
-                    print("View provider directory")
+                    self.display_provider_directory()
                 elif command == "2":
                     print("Add service record")
                 elif command == "0":
@@ -89,3 +89,7 @@ class ChocAn:
                     self.menu.page = Menu.MenuPage.ManagerTerminal
                 else:
                     print("Invalid command. Please try again.")
+
+    def display_provider_directory(self):
+        """Display the provider directory to the user."""
+        pass
