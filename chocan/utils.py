@@ -37,5 +37,15 @@ def confirmation(message):
     Returns:
         bool: True if yes; False if no
     """
-    confirmation = input(f"{message} (y/n) ").lower()
-    return confirmation == "yes" or confirmation == "y"
+    confirm = input(f"{message} (y/n) ").lower()
+
+    # TODO: If prompt does not ask for correct input, replace with:
+    # return confirm == "yes" or confirm == "y"
+    if confirm == "yes" or confirm == "y":
+        return True
+    elif confirm == "no" or confirm == "n":
+        return False
+    else:
+        # TODO: Prompt for correct input or incorrect input returns False?
+        print("Please enter one of these values: yes, no, y, n.")
+        return confirmation(message)

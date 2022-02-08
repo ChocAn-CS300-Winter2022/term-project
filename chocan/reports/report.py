@@ -15,7 +15,7 @@ class Report:
         """Write the report to disk."""
         self.report = self.generate_report()
 
-        # TODO: write to disk
+        # TODO: Write to disk
 
     def display(self):
         """Display the report in the terminal."""
@@ -31,5 +31,5 @@ class Report:
 
     def generate_report(self):
         """Generate the report text."""
-        # TODO: generate the report
+        # TODO: Generate the report
         pass
