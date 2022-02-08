@@ -58,7 +58,14 @@ class Report:
 
     @staticmethod
     def get_file(person):
-        """Get the file that the report should be written to."""
+        """Get the file that the report should be written to.
+
+        Args:
+            person (Person): person to pull ID from
+
+        Returns:
+            Path: path of the text file to be written
+        """
         folder = "providers" if person.id.startswith("8") else "members"
 
         return Path(".") / "reports" / folder / \
