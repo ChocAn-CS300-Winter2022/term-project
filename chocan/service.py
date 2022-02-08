@@ -9,7 +9,12 @@ class Service:
     def __init__(self, date_provided: datetime.date, provider, member,
         service_name, comments=""):
         self.current_date = datetime.now()
-        self.date_provided = date_provided
+
+        try:
+            self.date_provided = date_provided.date()
+        except AttributeError:
+            self.date_provided = date_provided
+
         self.provider = provider
         self.member = member
         self.service_name = service_name
