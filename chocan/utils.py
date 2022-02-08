@@ -37,7 +37,7 @@ def confirmation(message):
     Returns:
         bool: True if yes; False if no
     """
-    confirm = input(f"{message} (y/n) ").lower()
+    confirm = input(f"{message} (y/n) ").lower().strip()
 
     # TODO: If prompt does not ask for correct input, replace with:
     # return confirm == "yes" or confirm == "y"
