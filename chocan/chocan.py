@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+from chocan import utils
+from chocan.utils import Alignment
 from chocan.menu import Menu
 
 
@@ -93,4 +95,22 @@ class ChocAn:
 
     def display_provider_directory(self):
         """Display the provider directory to the user."""
-        pass
+        # Tabulate the provider directory for printing and writing to file
+        providers = utils.tabulate(["ID", "Name", "Fee"],
+            [(value['id'], key, value['fee']) for key, value in
+                self.provider_directory.items()],
+            "Provider Directory",
+            [Alignment.Left, Alignment.Left, Alignment.Right])
+
+        if not providers:
+            print("Could not write provider directory to file.")
+            return
+
+        path = Path(".") / "provider_directory.txt"
+
+        if not utils.check_file(path):
+            print("Could not write provider directory to file.")
+            return
+
+        with open(path, 'w') as file:
+            file.write(providers)

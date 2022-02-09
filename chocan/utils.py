@@ -1,4 +1,11 @@
+from enum import Enum
 from pathlib import Path
+
+
+class Alignment(Enum):
+    Left = 0
+    Center = 1
+    Right = 2
 
 
 def check_file(file: Path):
@@ -49,3 +56,70 @@ def confirmation(message):
         # TODO: Prompt for correct input or incorrect input returns False?
         print("Please enter one of these values: yes, no, y, n.")
         return confirmation(message)
+
+
+def tabulate(col_names, row_tuples, table_name="", col_alignments=[]):
+    """Tabulate given data, print it, and return it.
+
+    Args:
+        col_names (list[str]): list of names to print for column headers
+        row_tuples (list[tuple]): list of tuples to print as rows
+        table_name (str, optional): name to print above the table. Defaults to
+            "". Not returned as part of tabulated data.
+        col_alignments (list, optional): alignments for each column's data.
+            Defaults to [].
+
+    Returns:
+        [type]: [description]
+    """
+    text = ""
+    column_lengths = []
+    col_count = len(col_names)
+    extra_chars = 0
+
+    try:
+        # Loop through the column names and print them
+        for i in range(col_count):
+            name_len = len(col_names[i])
+            data_len = max([len(val[i]) for val in row_tuples])
+
+            # Store the longest choice, column name length or data length
+            column_lengths.append(name_len if name_len > data_len else data_len)
+
+            text += f"{col_names[i].center(column_lengths[i])}"
+
+            # Print a separate between names
+            if i < col_count - 1:
+                text += " | "
+                extra_chars += 3
+
+        # Print a separator
+        text += "\n" + ("-" * (sum(column_lengths) + extra_chars)) + "\n"
+
+        # Loop through the rows
+        for i in range(len(row_tuples)):
+            for j in range(col_count):
+                # Determine which column alignment to use
+                if col_alignments[j] == Alignment.Left:
+                    text += f"{row_tuples[i][j].ljust(column_lengths[j])}"
+                elif col_alignments[j] == Alignment.Center:
+                    text += f"{row_tuples[i][j].center(column_lengths[j])}"
+                elif col_alignments[j] == Alignment.Right:
+                    text += f"{row_tuples[i][j].rjust(column_lengths[j])}"
+
+                # Print a separator between each element
+                if j < col_count - 1:
+                    text += " | "
+
+            text += "\n"
+
+        # Print the table name if provided
+        if table_name:
+            table_name = "- " + table_name + " -"
+            print(table_name.center(text.index('\n'), '-'))
+
+        print(text)
+        return text
+    except IndexError:
+        print("Too many column names provided.")
+        return ""
