@@ -64,13 +64,11 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
     Args:
         col_names (list[str]): list of names to print for column headers
         row_tuples (list[tuple]): list of tuples to print as rows
-        table_name (str, optional): name to print above the table. Defaults to
-            "". Not returned as part of tabulated data.
         col_alignments (list, optional): alignments for each column's data.
             Defaults to [].
 
     Returns:
-        [type]: [description]
+        str: generated table
     """
     text = ""
     column_lengths = []
