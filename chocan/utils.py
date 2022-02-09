@@ -86,7 +86,7 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
 
             text += f"{col_names[i].center(column_lengths[i])}"
 
-            # Print a separate between names
+            # Print a separator between names
             if i < col_count - 1:
                 text += " | "
                 extra_chars += 3
