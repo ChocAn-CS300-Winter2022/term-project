@@ -1,50 +1,50 @@
 {
     "Acupuncture": {
-        "fee": "",
+        "fee": "79.99",
         "id": "397296"
     },
     "Aerobics Exercise": {
-        "fee": "",
+        "fee": "24.99",
         "id": "883948"
     },
     "Art Class": {
-        "fee": "",
+        "fee": "49.99",
         "id": "299766"
     },
     "Cognitive Behavioral Therapy": {
-        "fee": "",
+        "fee": "199.99",
         "id": "635622"
     },
     "Dietiary Training": {
-        "fee": "",
+        "fee": "74.99",
         "id": "598470"
     },
     "Equine Therapy": {
-        "fee": "",
+        "fee": "149.99",
         "id": "272409"
     },
     "Family Therapy": {
-        "fee": "",
+        "fee": "249.99",
         "id": "692675"
     },
     "Group Therapy": {
-        "fee": "",
+        "fee": "49.99",
         "id": "809282"
     },
     "Massage": {
-        "fee": "",
+        "fee": "59.99",
         "id": "801375"
     },
     "Occupational Therapy": {
-        "fee": "",
+        "fee": "149.99",
         "id": "846316"
     },
     "Physical Therapy": {
-        "fee": "",
+        "fee": "124.99",
         "id": "522669"
     },
     "Yoga": {
-        "fee": "",
+        "fee": "34.99",
         "id": "421498"
     }
 }
