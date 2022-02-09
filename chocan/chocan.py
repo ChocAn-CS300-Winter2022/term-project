@@ -99,12 +99,14 @@ class ChocAn:
         providers = utils.tabulate(["ID", "Name", "Fee"],
             [(value['id'], key, value['fee']) for key, value in
                 self.provider_directory.items()],
-            "Provider Directory",
             [Alignment.Left, Alignment.Left, Alignment.Right])
 
         if not providers:
             print("Could not write provider directory to file.")
             return
+
+        print(" Provider Directory ".center(providers.index("\n"), "-"))
+        print(providers)
 
         path = Path(".") / "provider_directory.txt"
 

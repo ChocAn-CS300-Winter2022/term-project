@@ -58,7 +58,7 @@ def confirmation(message):
         return confirmation(message)
 
 
-def tabulate(col_names, row_tuples, table_name="", col_alignments=[]):
+def tabulate(col_names, row_tuples, col_alignments=[]):
     """Tabulate given data, print it, and return it.
 
     Args:
@@ -113,12 +113,6 @@ def tabulate(col_names, row_tuples, table_name="", col_alignments=[]):
 
             text += "\n"
 
-        # Print the table name if provided
-        if table_name:
-            table_name = "- " + table_name + " -"
-            print(table_name.center(text.index('\n'), '-'))
-
-        print(text)
         return text
     except IndexError:
         print("Too many column names provided.")
