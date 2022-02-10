@@ -73,6 +73,7 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
     text = ""
     column_lengths = []
     col_count = len(col_names)
+    align_count = len(col_alignments)
     extra_chars = 0
 
     try:
@@ -97,8 +98,8 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
         # Loop through the rows
         for i in range(len(row_tuples)):
             for j in range(col_count):
-                # Determine which column alignment to use
-                if col_alignments[j] == Alignment.Left:
+                # Determine which column alignment to use, default left
+                if j > align_count - 1 or col_alignments[j] == Alignment.Left:
                     text += f"{row_tuples[i][j].ljust(column_lengths[j])}"
                 elif col_alignments[j] == Alignment.Center:
                     text += f"{row_tuples[i][j].center(column_lengths[j])}"
