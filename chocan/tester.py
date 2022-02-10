@@ -30,7 +30,7 @@ class Tester:
 
         for i in range(counts[0]):
             report = Report()
-            provider_report = Report()
+            provider_report = ProviderReport()
 
             for j in range(counts[1]):
                 service = Service(
@@ -43,5 +43,5 @@ class Tester:
                 report.services.append(service)
                 provider_report.services.append(service)
 
-                report.write()
-                provider_report.write(program.provider_directory)
+            report.write()
+            provider_report.write(program.provider_directory)
