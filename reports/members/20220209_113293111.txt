@@ -1,0 +1,8 @@
+John Smith (ID: 113293111)
+123 Main St., Los Angeles, CA 90001
+
+   Date    |    Provider    |      Service     
+-----------------------------------------------
+2022-02-09 | Cecelia Carson | Acupuncture      
+2022-02-09 | Cecelia Carson | Aerobics Exercise
+2022-02-09 | Cecelia Carson | Art Class        
