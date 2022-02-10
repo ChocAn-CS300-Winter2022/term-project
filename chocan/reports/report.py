@@ -10,9 +10,9 @@ class Report:
         self.services = []
         self.report = ""
 
-    def write(self):
+    def write(self, provider_directory={}):
         """Write the report to disk."""
-        self.generate_report()
+        self.generate_report(provider_directory)
 
         if not utils.check_file(self.path):
             print(f"Could not write report for member with ID "
@@ -22,11 +22,11 @@ class Report:
         with open(self.path, 'w') as file:
             file.write(self.report)
 
-    def display(self):
+    def display(self, provider_directory={}):
         """Display the report in the terminal."""
         if not self.report:
             if utils.confirmation("No report found. Generate it?"):
-                self.generate_report()
+                self.generate_report(provider_directory)
                 print()
             else:
                 print("No report to display.")
@@ -35,7 +35,7 @@ class Report:
         print(self.report)
         self.report = ""
 
-    def generate_report(self):
+    def generate_report(self, provider_directory={}):
         """Generate the report text."""
         self.report = ""
         member = self.services[0].member
