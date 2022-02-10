@@ -22,14 +22,22 @@ class ChocAn:
     def run(self):
         """Run the ChocAn program."""
         quit = False
+        path = Path(".") / "restricted" / "users"
 
         while not quit:
             command = self.menu.display()
 
             if self.menu.page == Menu.MenuPage.LogIn:
                 if command == "1":
-                    # TODO: Determine whether manager of provider
-                    self.menu.page = Menu.MenuPage.ManagerTerminal
+                    users = [file.stem for file in path.glob("*.json")]
+                    id = input("Enter an ID: ")
+                    is_provider = id.startswith("8")
+
+                    if not (id in users and is_provider or id.startswith("9")):
+                        print("Invalid ID. Please try again.")
+                    else:
+                        self.menu.page = (Menu.MenuPage.ProviderTerminal
+                            if is_provider else Menu.MenuPage.ManagerTerminal)
                 elif command == "0":
                     quit = True
                 else:
