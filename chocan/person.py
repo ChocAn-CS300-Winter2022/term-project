@@ -1,12 +1,16 @@
 import json
 from pathlib import Path
-# from datetime import date
+from enum import Enum
 
 from chocan import utils
-# from chocan.service import Service
 
 
 class Person:
+    class Status(Enum):
+        Invalid = -1
+        Suspended = 0
+        Valid = 1
+
     def __init__(self, id="", name="", address="", city="", state="",
         zip_code=""):
         """Create a new instance of Person."""
@@ -16,6 +20,7 @@ class Person:
         self.city = city[:14]
         self.state = state[:2]
         self.zip_code = zip_code[:5]
+        self.status = Person.Status.Valid
 
     def display(self):
         """Display the person on the command line."""
