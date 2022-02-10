@@ -1,5 +1,4 @@
 # pip install faker
-from multiprocessing.sharedctypes import Value
 from faker import Faker
 from faker.providers import DynamicProvider
 import json
