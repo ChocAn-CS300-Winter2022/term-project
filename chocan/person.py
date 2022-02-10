@@ -17,15 +17,6 @@ class Person:
         self.state = state[:2]
         self.zip_code = zip_code[:5]
 
-    # Should we delete? Without extra functionality like displaying a message,
-    # The same can be accomplished by calling my_person.services.append()
-    # in the calling code.
-    # def add_service(self, date_provided: date, provider, member,
-    #    service_name, comments=""):
-    #    """Add a service to the person."""
-    #    self.services.append(Service(date_provided, provider, member,
-    #        service_name, comments))
-
     def display(self):
         """Display the person on the command line."""
         print(f"---- ID: {self.id} ----")
