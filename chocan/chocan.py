@@ -44,12 +44,12 @@ class ChocAn:
             elif self.menu.page == Menu.MenuPage.ManagerTerminal:
                 if command == "1":
                     self.menu.page = Menu.MenuPage.Services
-                elif command == "0":
-                    self.menu.page = Menu.MenuPage.LogIn
                 elif command == "2":
                     self.menu.page = Menu.MenuPage.UserInformation
                 elif command == "3":
                     self.menu.page = Menu.MenuPage.Reports
+                elif command == "0":
+                    self.menu.page = Menu.MenuPage.LogIn
                 else:
                     print("Invalid command. Please try again.")
             elif self.menu.page == Menu.MenuPage.Services:
