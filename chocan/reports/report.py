@@ -45,16 +45,10 @@ class Report:
                        f"{member.address}, {member.city}, {member.state} " \
                        f"{member.zip_code}\n\n"
 
-        for i in range(0, len(self.services)):
-            service = self.services[i]
-
-            self.report += f"Date:     " \
-                           f"{service.date_provided.strftime('%Y-%m-%d')}\n" \
-                           f"Provider: {service.provider.name}\n" \
-                           f"Service:  {service.service_name}"
-
-            if i < (len(self.services) - 1):
-                self.report += "\n\n"
+        self.report += utils.tabulate(["Date", "Provider", "Service"],
+            [(service.date_provided.strftime("%Y-%m-%d"),
+              service.provider.name,
+              service.service_name) for service in self.services])
 
     @staticmethod
     def get_file(person):
