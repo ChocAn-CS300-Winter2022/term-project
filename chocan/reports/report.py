@@ -46,7 +46,7 @@ class Report:
                        f"{member.zip_code}\n\n"
 
         self.report += utils.tabulate(["Date", "Provider", "Service"],
-            [(service.date_provided.strftime("%Y-%m-%d"),
+            [(service.date_provided.strftime("%m-%d-%Y"),
               service.provider.name,
               service.service_name) for service in self.services])
 

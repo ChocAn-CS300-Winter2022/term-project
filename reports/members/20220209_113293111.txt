@@ -3,7 +3,7 @@ John Smith (ID: 113293111)
 
    Date    |    Provider    |           Service
 ----------------------------------------------------------
-2022-02-09 | Cecelia Carson | Acupuncture
-2022-02-09 | Cecelia Carson | Yoga
-2022-02-09 | Allen Fletcher | Aerobics Exercise
-2022-02-09 | Allen Fletcher | Cognitive Behavioral Therapy
+02-09-2022 | Cecelia Carson | Acupuncture
+02-09-2022 | Cecelia Carson | Yoga
+02-09-2022 | Allen Fletcher | Aerobics Exercise
+02-09-2022 | Allen Fletcher | Cognitive Behavioral Therapy
