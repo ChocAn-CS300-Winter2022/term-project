@@ -1,3 +1,8 @@
+import argparse
+import random
+from datetime import datetime
+from pathlib import Path
+
 from chocan.chocan import ChocAn
 from chocan.person import Person
 from chocan.reports.provider_report import ProviderReport
@@ -6,11 +11,24 @@ from chocan.reports.report import Report
 
 
 class Tester:
+    class TesterArgumentValidator(argparse.Action):
+        def __call__(self, parser, args, values, option_string=None):
+            report_count, service_count = values
+
+            if report_count < 1:
+                raise ValueError("invalid report count: must be larger than 0")
+            elif report_count > 100:
+                raise ValueError("invalid report count: must be 100 or less")
+
+            if service_count < 1:
+                raise ValueError("invalid service count: must be larger than 0")
+            elif service_count > 100:
+                raise ValueError("invalid service count: must be 100 or less")
+
+            setattr(args, self.dest, (report_count, service_count))
+
     @staticmethod
     def run_test(program: ChocAn, counts):
-        import random
-        from datetime import datetime
-        from pathlib import Path
 
         loaded_users = [file.stem for file
             in (Path(".") / "restricted" / "users").glob("*.json")]

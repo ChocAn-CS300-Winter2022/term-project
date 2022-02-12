@@ -11,9 +11,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", "-t", type=int, nargs=2,
         metavar=("REPORT_COUNT", "SERVICE_COUNT"),
+        action=Tester.TesterArgumentValidator,
         help="generate reports on load")
     parser.add_argument("--generate", "-g", nargs=2,
-        action=RandomGenerator.ArgumentValidator,
+        action=RandomGenerator.RandomGeneratorArgumentValidator,
         help=f"generate users. USER_TYPE must be one of: {', '.join(types)}. "
              f"COUNT must be larger than 0.",
         metavar=("USER_TYPE", "COUNT"))

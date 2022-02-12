@@ -8,18 +8,22 @@ from pathlib import Path
 
 
 class RandomGenerator:
-    class ArgumentValidator(argparse.Action):
+    class RandomGeneratorArgumentValidator(argparse.Action):
         def __call__(self, parser, args, values, option_string=None):
             valid_types = ("members", "providers", "managers")
             user_type, count = values
 
+            count = int(count)
+
             if user_type not in valid_types:
                 raise ValueError(f"invalid user type '{user_type}'")
 
-            if int(count) < 1:
-                raise ValueError(f"invalid count: must be larger than 0")
+            if count < 1:
+                raise ValueError("invalid count: must be larger than 0")
+            elif count > 100:
+                raise ValueError("invalid count: must be 100 or less")
 
-            setattr(args, self.dest, (user_type, int(count)))
+            setattr(args, self.dest, (user_type, count))
 
     @staticmethod
     def generate_id(user_type):
