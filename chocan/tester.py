@@ -47,20 +47,33 @@ class Tester:
         for provider in providers:
             provider.load()
 
-        for i in range(report_count):
-            report = Report()
-            provider_report = ProviderReport()
+        service_names = list(program.provider_directory.keys())
+        sampled_members = random.sample(members,
+            min(report_count, len(members)))
 
-            for j in range(service_count):
-                service = Service(
-                    datetime.now(),
-                    random.choice(providers),
-                    random.choice(members),
-                    random.choice(list(program.provider_directory.keys()))
-                )
+        provider_reports = {}
+
+        for member in sampled_members:
+            report = Report()
+
+            for i in range(service_count):
+                service = Service(datetime.now(), random.choice(providers),
+                    member, random.choice(service_names))
 
                 report.services.append(service)
-                provider_report.services.append(service)
+
+                if service.provider.id not in provider_reports:
+                    provider_reports[service.provider.id] = []
+
+                provider_reports[service.provider.id].append(service)
 
             report.write()
+
+        for id, services in provider_reports.items():
+            print(id)
+            provider_report = ProviderReport()
+
+            for service in services:
+                provider_report.services.append(service)
+
             provider_report.write(program.provider_directory)
