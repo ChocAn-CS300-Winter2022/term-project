@@ -29,6 +29,7 @@ class Tester:
 
     @staticmethod
     def run_test(program: ChocAn, counts):
+        report_count, service_count = counts
 
         loaded_users = [file.stem for file
             in (Path(".") / "restricted" / "users").glob("*.json")]
@@ -46,11 +47,11 @@ class Tester:
         for provider in providers:
             provider.load()
 
-        for i in range(counts[0]):
+        for i in range(report_count):
             report = Report()
             provider_report = ProviderReport()
 
-            for j in range(counts[1]):
+            for j in range(service_count):
                 service = Service(
                     datetime.now(),
                     random.choice(providers),
