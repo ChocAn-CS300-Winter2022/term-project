@@ -65,11 +65,3 @@ class Service:
 
         with open(path, "w") as file:
             json.dump(record, file, indent=4, sort_keys=False)
-
-    # Do we want to generate reports from the Service class directly, instead
-    # of having another class called Reports?
-    def generate_member_report(self):
-        pass
-
-    def generate_provider_report(self):
-        pass
