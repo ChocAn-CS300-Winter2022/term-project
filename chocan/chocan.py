@@ -24,6 +24,7 @@ class ChocAn:
         """Run the ChocAn program."""
         quit = False
         path = Path(".") / "restricted" / "users"
+        users = [file.stem for file in path.glob("*.json")]
 
         while not quit:
             command = self.menu.display()
@@ -32,7 +33,6 @@ class ChocAn:
             if self.menu.page == Menu.MenuPage.LogIn:
                 # Ask for ID
                 if command == "1":
-                    users = [file.stem for file in path.glob("*.json")]
                     id = input("Enter an ID: ")
                     is_provider = id.startswith("8")
 
