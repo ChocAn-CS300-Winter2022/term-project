@@ -41,35 +41,31 @@ class RandomGenerator:
 
     @staticmethod
     def generate(user_type, count):
-        los_angeles_provider = DynamicProvider(
-            provider_name="los_angeles",
-            elements=[
-                ("Alhambra", "91802"),
-                ("Beverly Hills", "90210"),
-                ("Burbank", "91502"),
-                ("Calabasas", "91302"),
-                ("Compton", "90220"),
-                ("Culver City", "90232"),
-                ("El Segundo", "90245"),
-                ("Glendale", "91206"),
-                ("Hermosa Beach", "90254"),
-                ("Inglewood", "90301"),
-                ("Long Beach", "90802"),
-                ("Los Angeles", "90012"),
-                ("Malibu", "90265"),
-                ("Montebello", "90640"),
-                ("Monterey Park", "91754"),
-                ("Palmdale", "93550"),
-                ("Pasadena", "91109"),
-                ("Pomona", "91766"),
-                ("Redondo Beach", "90277"),
-                ("Santa Clarita", "91355"),
-                ("Santa Monica", "90401"),
-                ("West Hollywood", "90069")]
-        )
+        cities = [
+            ("Alhambra", "91802"),
+            ("Beverly Hills", "90210"),
+            ("Burbank", "91502"),
+            ("Calabasas", "91302"),
+            ("Compton", "90220"),
+            ("Culver City", "90232"),
+            ("El Segundo", "90245"),
+            ("Glendale", "91206"),
+            ("Hermosa Beach", "90254"),
+            ("Inglewood", "90301"),
+            ("Long Beach", "90802"),
+            ("Los Angeles", "90012"),
+            ("Malibu", "90265"),
+            ("Montebello", "90640"),
+            ("Monterey Park", "91754"),
+            ("Palmdale", "93550"),
+            ("Pasadena", "91109"),
+            ("Pomona", "91766"),
+            ("Redondo Beach", "90277"),
+            ("Santa Clarita", "91355"),
+            ("Santa Monica", "90401"),
+            ("West Hollywood", "90069")]
 
         faker = Faker()
-        faker.add_provider(los_angeles_provider)
 
         for i in range(count):
             random_id = None
@@ -88,7 +84,7 @@ class RandomGenerator:
                 while len(address) > 25:
                     address = faker.street_address()
 
-                la_city = faker.los_angeles()
+                la_city = random.choice(cities)
 
                 json_str = {
                     "id": random_id["id"],
