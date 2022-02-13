@@ -8,6 +8,15 @@ from chocan import utils
 class Service:
     def __init__(self, date_provided: datetime.date, provider, member,
         service_name, comments=""):
+        """Create a new Service object.
+
+        Args:
+            date_provided (datetime.date): date the service was provided
+            provider (Person): provider who gave the service
+            member (Person): member who received the service
+            service_name (str): service name
+            comments (str, optional): comments about the service. Defaults to "".
+        """
         self.current_date = datetime.now()
 
         try:
@@ -21,9 +30,19 @@ class Service:
         self.comments = comments[:100]
 
     def display(self):
-        pass
+        """Display the Service."""
+        print(f"---- {self.service_name} ----")
+        print(f"Provider: {self.provider.name}")
+        print(f"Member:   {self.member.name}")
+        print(f"Date:     {self.date_provided.strftime('%m-%d-%Y')}")
+        print(f"Comments: {self.comments}")
 
     def generate_record(self, provider_directory):
+        """Generate a record to write to the logs folder.
+
+        Args:
+            provider_directory (dict): provider directory loaded in ChocAn
+        """
         record = {
             "current_date": self.current_date.strftime("%m-%d-%Y %H:%M:%S"),
             "date_provided": self.date_provided.strftime("%m-%d-%Y"),
