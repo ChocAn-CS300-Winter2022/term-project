@@ -23,8 +23,6 @@ class Menu:
     def __init__(self):
         """Create a new Menu instance."""
         self.page = Menu.MenuPage.LogIn
-        self.people = []
-        self.reports = []
 
     def display(self):
         """Display the menu system."""
