@@ -87,7 +87,7 @@ class ChocAn:
                     self.display_provider_directory()
                 # Add a service record
                 elif command == "2":
-                    print("Add service record")
+                    self.add_service_record()
                 # Back to terminal
                 elif command == "0":
                     if self.current_person["id"].startswith("8"):
