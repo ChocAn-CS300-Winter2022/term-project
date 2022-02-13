@@ -52,9 +52,9 @@ class Service:
             "comments": self.comments
         }
 
-        # filename = 111111111_888888888_2022-01-01_00:00:00.json
+        # filename = 111111111_888888888_20220101_000000.json
         filename = (f"{self.provider.id}_{self.member.id}_"
-                    f"{self.current_date.strftime('%Y-%m-%d_%H-%M-%S')}"
+                    f"{self.current_date.strftime('%Y%m%d_%H%M%S')}"
                     f".json")
 
         path = Path(".") / "restricted" / "logs" / filename
