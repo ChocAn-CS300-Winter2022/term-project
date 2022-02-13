@@ -5,9 +5,9 @@ from chocan import utils
 
 
 class Report:
-    def __init__(self):
+    def __init__(self, services=[]):
         """Initialize the report."""
-        self.services = []
+        self.services = services
         self.report = ""
 
     def write(self, provider_directory):
