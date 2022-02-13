@@ -28,9 +28,7 @@ class Tester:
             setattr(args, self.dest, (report_count, service_count))
 
     @staticmethod
-    def run_test(program: ChocAn, counts):
-        report_count, service_count = counts
-
+    def run_test(program: ChocAn, report_count, service_count):
         loaded_users = [file.stem for file
             in (Path(".") / "restricted" / "users").glob("*.json")]
         loaded_members = [user for user in loaded_users
@@ -70,7 +68,6 @@ class Tester:
             report.write()
 
         for id, services in provider_reports.items():
-            print(id)
             provider_report = ProviderReport()
 
             for service in services:
