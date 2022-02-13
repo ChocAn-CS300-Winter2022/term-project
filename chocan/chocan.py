@@ -1,10 +1,14 @@
 import json
+import re
+from datetime import datetime
 from pathlib import Path
 
 from chocan import utils
 from chocan.utils import Alignment
 from chocan.menu import Menu
 from chocan.person import Person
+from chocan.reports.report import Report
+from chocan.service import Service
 
 
 class ChocAn:
@@ -25,7 +29,7 @@ class ChocAn:
         """Run the ChocAn program."""
         quit = False
         path = Path(".") / "restricted" / "users"
-        users = [file.stem for file in path.glob("*.json")]
+        self.users = [file.stem for file in path.glob("*.json")]
 
         while not quit:
             command = self.menu.display()
@@ -164,5 +168,63 @@ class ChocAn:
         with open(path, 'w') as file:
             file.write(providers)
 
+    def add_service_record(self):
+        """Add a service record."""
+        id = input("Enter member ID: ")
+
+        if id not in self.users:
+            print("Invalid member ID.")
+            return
+
+        # TODO: Should we allow provider and manager numbers to be
+        # used as IDs for services?
+        member = Person(id)
+        member.load()
+
+        if member.status == Person.Status.Invalid:
+            print("Invalid member ID.")
+            return
+
+        if member.status == Person.Status.Suspended:
+            print("Member suspended until dues are paid.")
+            return
+
+        service_date = ""
+        success = False
+
+        while not success:
+            service_date = input("Enter date service was provided "
+                "(MM-DD-YYYY): ")
+            success = re.search(r"\d{2}-\d{2}-\d{4}", service_date)
+
+            if not success:
+                print("Invalid date format. Please try again.")
+
+        success = False
+        self.display_provider_directory()
+
+        service_code = ""
+        confirm = False
+
+        while service_code not in self.provider_directory or not confirm:
+            service_code = input("Enter service service_code: ")
+
+            if service_code not in self.provider_directory:
+                print("Invalid service_code. Please try again.")
+            else:
+                confirm = utils.confirmation(
+                    f"Is \"{self.provider_directory[service_code]['name']}\" "
+                    "the correct service?")
+
+        comments = input("Enter comments: ")
+
+        Service(
+            datetime.strptime(service_date, "%m-%d-%Y"),
+            self.current_person,
+            member,
+            service_code,
+            comments).generate_record(self.provider_directory)
+
+        print(f"Fee: ${self.provider_directory[service_code]['fee']}")
 
 
