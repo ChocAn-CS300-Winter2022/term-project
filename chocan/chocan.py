@@ -134,7 +134,7 @@ class ChocAn:
         """Display the provider directory to the user."""
         # Tabulate the provider directory for printing and writing to file
         providers = utils.tabulate(["ID", "Name", "Fee"],
-            [(value['id'], key, value['fee']) for key, value in
+            [(key, value["name"], value["fee"]) for key, value in
                 self.provider_directory.items()],
             [Alignment.Left, Alignment.Left, Alignment.Right])
 

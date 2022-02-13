@@ -4,11 +4,7 @@ from chocan.reports.report import Report
 
 
 class ProviderReport(Report):
-    def generate_report(self, provider_directory={}):
-        if not provider_directory:
-            print("No provider directory given.")
-            return
-
+    def generate_report(self, provider_directory):
         self.report = ""
         provider = self.services[0].provider
         self.path = self.get_file(provider)
@@ -24,8 +20,8 @@ class ProviderReport(Report):
               service.current_date.strftime("%m-%d-%Y %H:%M:%S"),
               service.member.name,
               service.member.id,
-              provider_directory[service.service_name]["id"],
-              "$" + provider_directory[service.service_name]["fee"]) \
+              service.service_code,
+              "$" + provider_directory[service.service_code]["fee"]) \
                   for service in self.services],
             col_alignments=[Alignment.Left, Alignment.Left, Alignment.Left,
                 Alignment.Right, Alignment.Right, Alignment.Right])

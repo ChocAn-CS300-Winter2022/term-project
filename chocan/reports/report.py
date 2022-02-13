@@ -10,7 +10,7 @@ class Report:
         self.services = []
         self.report = ""
 
-    def write(self, provider_directory={}):
+    def write(self, provider_directory):
         """Write the report to disk."""
         self.generate_report(provider_directory)
 
@@ -22,7 +22,7 @@ class Report:
         with open(self.path, 'w') as file:
             file.write(self.report)
 
-    def display(self, provider_directory={}):
+    def display(self, provider_directory):
         """Display the report in the terminal."""
         if not self.report:
             if utils.confirmation("No report found. Generate it?"):
@@ -35,7 +35,7 @@ class Report:
         print(self.report)
         self.report = ""
 
-    def generate_report(self, provider_directory={}):
+    def generate_report(self, provider_directory):
         """Generate the report text."""
         self.report = ""
         member = self.services[0].member
@@ -48,7 +48,8 @@ class Report:
         self.report += utils.tabulate(["Date", "Provider", "Service"],
             [(service.date_provided.strftime("%m-%d-%Y"),
               service.provider.name,
-              service.service_name) for service in self.services])
+              provider_directory[service.service_code]["name"])
+              for service in self.services])
 
     @staticmethod
     def get_file(person):

@@ -7,14 +7,14 @@ from chocan import utils
 
 class Service:
     def __init__(self, date_provided: datetime.date, provider, member,
-        service_name, comments=""):
+        service_code, comments=""):
         """Create a new Service object.
 
         Args:
             date_provided (datetime.date): date the service was provided
             provider (Person): provider who gave the service
             member (Person): member who received the service
-            service_name (str): service name
+            service_code (str): service code
             comments (str, optional): comments about the service. Defaults to "".
         """
         self.current_date = datetime.now()
@@ -26,12 +26,16 @@ class Service:
 
         self.provider = provider
         self.member = member
-        self.service_name = service_name
+        self.service_code = service_code
         self.comments = comments[:100]
 
-    def display(self):
-        """Display the Service."""
-        print(f"---- {self.service_name} ----")
+    def display(self, provider_directory):
+        """Display the Service.
+
+        Args:
+            provider_directory (dict): provider directory loaded in ChocAn
+        """
+        print(f"---- {provider_directory[self.service_code]['name']} ----")
         print(f"Provider: {self.provider.name}")
         print(f"Member:   {self.member.name}")
         print(f"Date:     {self.date_provided.strftime('%m-%d-%Y')}")
@@ -48,7 +52,7 @@ class Service:
             "date_provided": self.date_provided.strftime("%m-%d-%Y"),
             "provider": self.provider.id,
             "member": self.member.id,
-            "service_code": provider_directory[self.service_name]["id"],
+            "service_code": provider_directory[self.service_code]["name"],
             "comments": self.comments
         }
 

@@ -45,7 +45,7 @@ class Tester:
         for provider in providers:
             provider.load()
 
-        service_names = list(program.provider_directory.keys())
+        service_codes = list(program.provider_directory.keys())
         sampled_members = random.sample(members,
             min(report_count, len(members)))
 
@@ -56,7 +56,7 @@ class Tester:
 
             for i in range(service_count):
                 service = Service(datetime.now(), random.choice(providers),
-                    member, random.choice(service_names))
+                    member, random.choice(service_codes))
 
                 report.services.append(service)
 
@@ -65,7 +65,7 @@ class Tester:
 
                 provider_reports[service.provider.id].append(service)
 
-            report.write()
+            report.write(program.provider_directory)
 
         for id, services in provider_reports.items():
             provider_report = ProviderReport()

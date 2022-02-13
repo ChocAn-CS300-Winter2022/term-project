@@ -1,50 +1,50 @@
 {
-    "Acupuncture": {
-        "fee": "79.99",
-        "id": "397296"
+    "397296": {
+        "name": "Acupuncture",
+        "fee": "79.99"
     },
-    "Aerobics Exercise": {
-        "fee": "24.99",
-        "id": "883948"
+    "883948": {
+        "name": "Aerobics Exercise",
+        "fee": "24.99"
     },
-    "Art Class": {
-        "fee": "49.99",
-        "id": "299766"
+    "299766": {
+        "name": "Art Class",
+        "fee": "49.99"
     },
-    "Cognitive Behavioral Therapy": {
-        "fee": "199.99",
-        "id": "635622"
+    "635622": {
+        "name": "Cognitive Behavioral Therapy",
+        "fee": "199.99"
     },
-    "Dietiary Training": {
-        "fee": "74.99",
-        "id": "598470"
+    "598470": {
+        "name": "Dietiary Training",
+        "fee": "74.99"
     },
-    "Equine Therapy": {
-        "fee": "149.99",
-        "id": "272409"
+    "272409": {
+        "name": "Equine Therapy",
+        "fee": "149.99"
     },
-    "Family Therapy": {
-        "fee": "249.99",
-        "id": "692675"
+    "692675": {
+        "name": "Family Therapy",
+        "fee": "249.99"
     },
-    "Group Therapy": {
-        "fee": "49.99",
-        "id": "809282"
+    "809282": {
+        "name": "Group Therapy",
+        "fee": "49.99"
     },
-    "Massage": {
-        "fee": "59.99",
-        "id": "801375"
+    "801375": {
+        "name": "Massage",
+        "fee": "59.99"
     },
-    "Occupational Therapy": {
-        "fee": "149.99",
-        "id": "846316"
+    "846316": {
+        "name": "Occupational Therapy",
+        "fee": "149.99"
     },
-    "Physical Therapy": {
-        "fee": "124.99",
-        "id": "522669"
+    "522669": {
+        "name": "Physical Therapy",
+        "fee": "124.99"
     },
-    "Yoga": {
-        "fee": "34.99",
-        "id": "421498"
+    "421498": {
+        "name": "Yoga",
+        "fee": "34.99"
     }
 }
