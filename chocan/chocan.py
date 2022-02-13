@@ -34,7 +34,17 @@ class ChocAn:
             if self.menu.page == Menu.MenuPage.LogIn:
                 # Ask for ID
                 if command == "1":
-                    self.login()
+                    id = input("Enter an ID: ")
+                    is_provider = id.startswith("8")
+
+                    if id not in self.users or not (is_provider or
+                        id.startswith("9")):
+                        print("Invalid ID. Please try again.")
+                    else:
+                        self.current_person = Person(id)
+
+                        self.menu.page = (Menu.MenuPage.ProviderTerminal
+                            if is_provider else Menu.MenuPage.ManagerTerminal)
                 # Exit program
                 elif command == "0":
                     quit = True
@@ -154,15 +164,5 @@ class ChocAn:
         with open(path, 'w') as file:
             file.write(providers)
 
-    def login(self):
-        """Log in to the terminal."""
-        id = input("Enter an ID: ")
-        is_provider = id.startswith("8")
 
-        if id not in self.users or not (is_provider or id.startswith("9")):
-            print("Invalid ID. Please try again.")
-        else:
-            self.current_person = Person(id)
 
-            self.menu.page = (Menu.MenuPage.ProviderTerminal
-                if is_provider else Menu.MenuPage.ManagerTerminal)
