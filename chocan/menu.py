@@ -51,14 +51,9 @@ class Menu:
             print("0) Back")
         elif self.page == Menu.MenuPage.UserInformation:
             print(" User Information ".center(67, "="))
-            print(" Member ".center(67, "-"))
-            print("1) Add member")
-            print("2) Remove member")
-            print("3) Modify member")
-            print(" Provider ".center(67, "-"))
-            print("4) Add provider")
-            print("5) Remove provider")
-            print("6) Modify provider")
+            print("1) Add user")
+            print("2) Remove user")
+            print("3) Modify user")
             print("0) Back")
         elif self.page == Menu.MenuPage.Reports:
             print(" Reports ".center(67, "="))

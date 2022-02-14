@@ -90,7 +90,7 @@ class ChocAn:
                     self.add_service_record()
                 # Back to terminal
                 elif command == "0":
-                    if self.current_person["id"].startswith("8"):
+                    if self.current_person.id.startswith("8"):
                         self.menu.page = Menu.MenuPage.ProviderTerminal
                     else:
                         self.menu.page = Menu.MenuPage.ManagerTerminal
@@ -98,27 +98,18 @@ class ChocAn:
                     print("Invalid command. Please try again.")
             # Manage users
             elif self.menu.page == Menu.MenuPage.UserInformation:
-                # Add member
+                # Add user
                 if command == "1":
-                    print("Add member")
-                # Remove member
+                    self.add_user()
+                # Remove user
                 elif command == "2":
-                    print("Remove member")
-                # Modify member
+                    self.remove_user()
+                # Modify user
                 elif command == "3":
-                    print("Modify member")
-                # Add provider
-                elif command == "4":
-                    print("Add provider")
-                # Remove provider
-                elif command == "5":
-                    print("Remove provider")
-                # Modify provider
-                elif command == "6":
-                    print("Modify provider")
+                    self.modify_user()
                 # Back to terminal
                 elif command == "0":
-                    if self.current_person["id"].startswith("8"):
+                    if self.current_person.id.startswith("8"):
                         self.menu.page = Menu.MenuPage.ProviderTerminal
                     else:
                         self.menu.page = Menu.MenuPage.ManagerTerminal
@@ -137,7 +128,7 @@ class ChocAn:
                     print("Generate provider report")
                 # Back to terminal
                 elif command == "0":
-                    if self.current_person["id"].startswith("8"):
+                    if self.current_person.id.startswith("8"):
                         self.menu.page = Menu.MenuPage.ProviderTerminal
                     else:
                         self.menu.page = Menu.MenuPage.ManagerTerminal
@@ -227,4 +218,12 @@ class ChocAn:
 
         print(f"Fee: ${self.provider_directory[service_code]['fee']}")
 
+    def add_user(self):
+        pass
+
+    def remove_user(self):
+        pass
+
+    def modify_user(self):
+        pass
 
