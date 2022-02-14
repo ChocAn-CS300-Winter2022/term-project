@@ -163,12 +163,10 @@ class ChocAn:
         """Add a service record."""
         id = input("Enter member ID: ")
 
-        if id not in self.users:
+        if id not in self.users or id.startswith("8") or id.startswith("9"):
             print("Invalid member ID.")
             return
 
-        # TODO: Should we allow provider and manager numbers to be
-        # used as IDs for services?
         member = Person(id)
         member.load()
 
@@ -179,6 +177,22 @@ class ChocAn:
         if member.status == Person.Status.Suspended:
             print("Member suspended until dues are paid.")
             return
+
+        if self.current_person.id.startswith("9"):
+            provider_id = ""
+
+            while provider_id not in self.users or \
+                not provider_id.startswith("8"):
+                provider_id = input("Enter provider ID: ")
+
+                if provider_id not in self.users or \
+                    not provider_id.startswith("8"):
+                    print("Invalid provider ID. Please try again.")
+
+            provider = Person(provider_id)
+            provider.load()
+        else:
+            provider = self.current_person
 
         service_date = ""
         success = False
@@ -198,10 +212,10 @@ class ChocAn:
         confirm = False
 
         while service_code not in self.provider_directory or not confirm:
-            service_code = input("Enter service service_code: ")
+            service_code = input("Enter service code: ")
 
             if service_code not in self.provider_directory:
-                print("Invalid service_code. Please try again.")
+                print("Invalid service code. Please try again.")
             else:
                 confirm = utils.confirmation(
                     f"Is \"{self.provider_directory[service_code]['name']}\" "
@@ -211,7 +225,7 @@ class ChocAn:
 
         Service(
             datetime.strptime(service_date, "%m-%d-%Y"),
-            self.current_person,
+            provider,
             member,
             service_code,
             comments).generate_record(self.provider_directory)
