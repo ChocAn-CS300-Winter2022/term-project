@@ -106,13 +106,34 @@ class ChocAn:
                     self.remove_user()
                 # Modify user
                 elif command == "3":
-                    self.modify_user()
+                    self.menu.page = Menu.MenuPage.ModifyUser
                 # Back to terminal
                 elif command == "0":
                     if self.current_person.id.startswith("8"):
                         self.menu.page = Menu.MenuPage.ProviderTerminal
                     else:
                         self.menu.page = Menu.MenuPage.ManagerTerminal
+                else:
+                    print("Invalid command. Please try again.")
+            elif self.menu.page == Menu.MenuPage.ModifyUser:
+                # Name
+                if command == "1":
+                    pass
+                # Address
+                elif command == "2":
+                    pass
+                # City
+                elif command == "3":
+                    pass
+                # State
+                elif command == "4":
+                    pass
+                # Zip code
+                elif command == "5":
+                    pass
+                # Back to user information
+                elif command == "0":
+                    self.menu.page = Menu.MenuPage.UserInformation
                 else:
                     print("Invalid command. Please try again.")
             # Manage reports

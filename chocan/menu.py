@@ -16,8 +16,9 @@ class Menu:
         ProviderTerminal = 2
         ManagerTerminal = 3
         UserInformation = 4
-        Services = 5
-        Reports = 6
+        ModifyUser = 5
+        Services = 6
+        Reports = 7
 
     #Menu constructor - using page inspiried by Alana's teachings
     def __init__(self):
@@ -54,6 +55,14 @@ class Menu:
             print("1) Add user")
             print("2) Remove user")
             print("3) Modify user")
+            print("0) Back")
+        elif self.page == Menu.MenuPage.ModifyUser:
+            print("Modify User".center(67, "="))
+            print("1) Name")
+            print("2) Address")
+            print("3) City")
+            print("4) State")
+            print("5) Zip code")
             print("0) Back")
         elif self.page == Menu.MenuPage.Reports:
             print(" Reports ".center(67, "="))
