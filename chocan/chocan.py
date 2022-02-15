@@ -32,7 +32,9 @@ class ChocAn:
         self.users = [file.stem for file in path.glob("*.json")]
 
         while not quit:
-            command = self.menu.display()
+            command = self.menu.display(
+                self.current_person is not None and
+                self.current_person.id.startswith("9"))
 
             # Login page
             if self.menu.page == Menu.MenuPage.LogIn:
@@ -46,38 +48,27 @@ class ChocAn:
                         print("Invalid ID. Please try again.")
                     else:
                         self.current_person = Person(id)
-
-                        self.menu.page = (Menu.MenuPage.ProviderTerminal
-                            if is_provider else Menu.MenuPage.ManagerTerminal)
+                        self.menu.page = Menu.MenuPage.Main
                 # Exit program
                 elif command == "0":
                     quit = True
                 else:
                     print("Invalid command. Please try again.")
-            # Provider terminal
-            elif self.menu.page == Menu.MenuPage.ProviderTerminal:
+            # Main terminal
+            elif self.menu.page == Menu.MenuPage.Main:
                 # Manage services
                 if command == "1":
                     self.menu.page = Menu.MenuPage.Services
                 # Back to login
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.LogIn
-                else:
-                    print("Invalid command. Please try again.")
-            # Manager terminal
-            elif self.menu.page == Menu.MenuPage.ManagerTerminal:
-                # Manage services
-                if command == "1":
-                    self.menu.page = Menu.MenuPage.Services
-                # Manager users
-                elif command == "2":
-                    self.menu.page = Menu.MenuPage.UserInformation
-                # Manage reports
-                elif command == "3":
-                    self.menu.page = Menu.MenuPage.Reports
-                # Back to login page
-                elif command == "0":
-                    self.menu.page = Menu.MenuPage.LogIn
+                elif self.current_person.id.startswith("9"):
+                    # Manage users
+                    if command == "2":
+                        self.menu.page = Menu.MenuPage.UserInformation
+                    # Manage reports
+                    elif command == "3":
+                        self.menu.page = Menu.MenuPage.Reports
                 else:
                     print("Invalid command. Please try again.")
             # Manage services
@@ -90,10 +81,7 @@ class ChocAn:
                     self.add_service_record()
                 # Back to terminal
                 elif command == "0":
-                    if self.current_person.id.startswith("8"):
-                        self.menu.page = Menu.MenuPage.ProviderTerminal
-                    else:
-                        self.menu.page = Menu.MenuPage.ManagerTerminal
+                    self.menu.page = Menu.MenuPage.Main
                 else:
                     print("Invalid command. Please try again.")
             # Manage users
@@ -107,12 +95,10 @@ class ChocAn:
                 # Modify user
                 elif command == "3":
                     self.menu.page = Menu.MenuPage.ModifyUser
+                    # TODO: ask for ID to modify
                 # Back to terminal
                 elif command == "0":
-                    if self.current_person.id.startswith("8"):
-                        self.menu.page = Menu.MenuPage.ProviderTerminal
-                    else:
-                        self.menu.page = Menu.MenuPage.ManagerTerminal
+                    self.menu.page = Menu.MenuPage.Main
                 else:
                     print("Invalid command. Please try again.")
             elif self.menu.page == Menu.MenuPage.ModifyUser:
@@ -149,10 +135,7 @@ class ChocAn:
                     print("Generate provider report")
                 # Back to terminal
                 elif command == "0":
-                    if self.current_person.id.startswith("8"):
-                        self.menu.page = Menu.MenuPage.ProviderTerminal
-                    else:
-                        self.menu.page = Menu.MenuPage.ManagerTerminal
+                    self.menu.page = Menu.MenuPage.Main
                 else:
                     print("Invalid command. Please try again.")
 
