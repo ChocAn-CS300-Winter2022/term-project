@@ -25,7 +25,15 @@ class Menu:
         self.page = Menu.MenuPage.LogIn
 
     def display(self, is_manager=False):
-        """Display the menu system."""
+        """Display the menu system.
+
+        Args:
+            is_manager (bool, optional): whether the current user a manager.
+                Defaults to False.
+
+        Returns:
+            str: user-provided input
+        """
         print()
 
         if self.page == Menu.MenuPage.LogIn:
