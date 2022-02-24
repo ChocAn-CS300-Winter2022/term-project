@@ -17,12 +17,12 @@ if __name__ == "__main__":
             "random services\nfor each. Each service will also  receive a "
             "randomly-assigned provider, and for\neach a provider report will "
             "also be generated.")
-    parser.add_argument("--test", "-t", type=int, nargs=2,
+    parser.add_argument("--generate-reports", "-gr", type=int, nargs=2,
         metavar=("REPORT_COUNT", "SERVICE_COUNT"),
         action=Tester.TesterArgumentValidator,
         help="generate REPORT_COUNT member reports, each with SERVICE_COUNT "
             "services on load")
-    parser.add_argument("--generate", "-g", nargs=2,
+    parser.add_argument("--generate-users", "-gu", nargs=2,
         action=RandomGenerator.RandomGeneratorArgumentValidator,
         help=f"generate users. USER_TYPE must be one of: {', '.join(types)}.",
         metavar=("USER_TYPE", "USER_COUNT"))
