@@ -1,12 +1,12 @@
 import json
 from pathlib import Path
-from enum import Enum
+from enum import IntEnum
 
 from chocan import utils
 
 
 class Person:
-    class Status(Enum):
+    class Status(IntEnum):
         Invalid = -1
         Suspended = 0
         Valid = 1
@@ -57,7 +57,7 @@ class Person:
 
         with open(path, 'r') as file:
             self.__dict__.update(json.load(file))
-            
+
         return True
 
     @staticmethod

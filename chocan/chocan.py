@@ -86,7 +86,7 @@ class ChocAn:
                 else:
                     print("Invalid command. Please try again.")
             # Manage users
-            elif self.menu.page == Menu.MenuPage.UserInformation:              
+            elif self.menu.page == Menu.MenuPage.UserInformation:
                 # Add user
                 if command == "1":
                     self.add_user()
@@ -239,9 +239,11 @@ class ChocAn:
             command = ""
 
             while command == "":
+                print(" Services ".center(67, "="))
                 print("1) Create a new Member")
                 print("2) Create a new Provider")
                 print("0) Back")
+                print(" Services ".center(67, "="))
 
                 command = input("> ")
                 #use this to check if making a provider to save input
@@ -249,29 +251,28 @@ class ChocAn:
                 create_provider = True if command == "2" else False
 
                 if command == "1" or command == "2":
-                    
                     name = input("Enter first and last name: ")
                     address = input("Enter address: ")
                     city = input("Enter city: ")
                     state = input("Enter state: ")
                     zip_code = input("Enter zip code: ")
-                    #status = Person.Status.Valid
-                    
+
                     id = ""
                     id_valid = False
+
                     while not id_valid:
-                        id = RandomGenerator.generate_id("providers" if 
+                        id = RandomGenerator.generate_id("providers" if
                             create_provider else "members")
                         if id["id"] not in self.users:
                             id_valid = True
 
-                    new_user = Person(id["id"], name, address, city, state, zip_code)
-                    new_user.status = Person.Status.Valid
+                    new_user = Person(id["id"], name, address, city, state,
+                        zip_code)
                     new_user.display()
-                    if utils.confirmation(f"Do you want to modify: {name}?"):
-                        self.menu.page = Menu.MenuPage.ModifyUser
-
                     new_user.save()
+
+                    if utils.confirmation(f"Do you want to modify {name}?"):
+                        self.menu.page = Menu.MenuPage.ModifyUser
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.UserInformation
                 else:
