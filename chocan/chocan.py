@@ -126,13 +126,13 @@ class ChocAn:
             elif self.menu.page == Menu.MenuPage.Reports:
                 # Generate summary report
                 if command == "1":
-                    print("Generate summary report")
+                    self.generate_summary_report()
                 # Generate member report
                 elif command == "2":
-                    print("Generate member report")
+                    self.generate_member_report()
                 # Generate provider report
                 elif command == "3":
-                    print("Generate provider report")
+                    self.generate_provider_report()
                 # Back to terminal
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.Main
@@ -245,3 +245,11 @@ class ChocAn:
     def modify_user(self):
         pass
 
+    def generate_summary_report(self):
+        pass
+
+    def generate_member_report(self):
+        pass
+
+    def generate_provider_report(self):
+        pass
