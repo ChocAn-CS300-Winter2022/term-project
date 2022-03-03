@@ -9,7 +9,7 @@ from chocan.menu import Menu
 from chocan.person import Person
 from chocan.reports.report import Report
 from chocan.service import Service
-
+from chocan.random_generator import RandomGenerator
 
 class ChocAn:
     def __init__(self):
@@ -244,12 +244,36 @@ class ChocAn:
                 print("0) Back")
 
                 command = input("> ")
-                create_provider = True if command == "3" else False
+                #use this to check if making a provider to save input
+                #commands
+                create_provider = True if command == "2" else False
 
-                if command == "2":
-                    pass
-                elif command == "3":
-                    pass
+                if command == "1" or command == "2":
+                    
+                    name = input("Enter first and last name: ")
+                    address = input("Enter address: ")
+                    city = input("Enter city: ")
+                    state = input("Enter state: ")
+                    zip_code = input("Enter zip code: ")
+                    #status = Person.Status.Valid
+                    
+                    id = ""
+                    id_valid = False
+                    while not id_valid:
+                        id = RandomGenerator.generate_id("providers" if 
+                            create_provider else "members")
+                        if id["id"] not in self.users:
+                            id_valid = True
+
+                    new_user = Person(id["id"], name, address, city, state, zip_code)
+                    new_user.status = Person.Status.Valid
+                    new_user.display()
+                    if utils.confirmation(f"Do you want to modify: {name}?"):
+                        self.menu.page = Menu.MenuPage.ModifyUser
+
+                    new_user.save()
+                elif command == "0":
+                    self.menu.page = Menu.MenuPage.UserInformation
                 else:
                     print("Invalid command. Please try again.")
 
