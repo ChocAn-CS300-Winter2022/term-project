@@ -26,8 +26,8 @@ if __name__ == "__main__":
         action=RandomGenerator.RandomGeneratorArgumentValidator,
         help=f"generate users. USER_TYPE must be one of: {', '.join(types)}.",
         metavar=("USER_TYPE", "USER_COUNT"))
-    args = parser.parse_args()
 
+    args = parser.parse_args()
     program = ChocAn()
 
     if args.generate_users:

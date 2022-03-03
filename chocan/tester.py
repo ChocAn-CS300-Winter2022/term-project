@@ -5,15 +5,18 @@ from datetime import datetime
 from pathlib import Path
 
 from chocan.chocan import ChocAn
+from chocan.menu import Menu
 from chocan.person import Person
-from chocan.reports.provider_report import ProviderReport
-from chocan.service import Service
 from chocan.reports.report import Report
+from chocan.reports.provider_report import ProviderReport
+from chocan.reports.summary_report import SummaryReport
+from chocan.service import Service
 
 
 class Tester(unittest.TestCase):
     class TesterArgumentValidator(argparse.Action):
         def __call__(self, parser, args, values, option_string=None):
+            """Ensure Tester arguments are valid."""
             report_count, service_count = values
 
             if report_count < 1:
@@ -30,6 +33,13 @@ class Tester(unittest.TestCase):
 
     @staticmethod
     def generate_reports(program: ChocAn, report_count, service_count):
+        """Generate example reports.
+
+        Args:
+            program (ChocAn): main program instance
+            report_count (int): number of reports to generate
+            service_count (int): number of services to generate
+        """
         loaded_users = [file.stem for file
             in (Path(".") / "restricted" / "users").glob("*.json")]
         loaded_members = [user for user in loaded_users
@@ -76,6 +86,34 @@ class Tester(unittest.TestCase):
 
             provider_report.write(program.provider_directory)
 
-    def test___init___success(self):
+    def test_report_init_success(self):
+        """Test Report initialization."""
         report = Report()
-        self.assertEqual({report.services, report.report}, {[], ""})
+        self.assertEqual((report.services, report.report), ([], ""))
+
+    def test_provider_report_init_success(self):
+        """Test Provider Report initialization."""
+        provider_report = ProviderReport()
+        self.assertEqual((provider_report.services, provider_report.report),
+            ([], ""))
+
+    def test_summary_report_init_success(self):
+        """Test Summary Report initialization."""
+        summary_report = SummaryReport()
+        # TODO: assert summary report
+
+    def test_chocan_init_success(self):
+        """Test ChocAn initialization."""
+        chocan = ChocAn()
+        self.assertEqual((chocan.menu.page, chocan.current_person),
+            (Menu.MenuPage.LogIn, None))
+
+    def test_menu_init_success(self):
+        """Test Menu initialization."""
+        menu = Menu()
+        self.assertEqual(menu.page, Menu.MenuPage.LogIn)
+
+    def test_person_init_success(self):
+        """Test Person initialization."""
+        person = Person()
+        self.assertEqual(())
