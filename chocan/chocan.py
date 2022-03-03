@@ -92,8 +92,15 @@ class ChocAn:
                     self.add_user()
                 # Remove user
                 elif command == "2":
-                    self.remove_user()
-                # Modify user
+                    id = input("Enter the ID of the Member you would "
+                          "like to remove: ")
+                    self.modified_user = Person(id)
+                    # Back to terminal selection if load fails
+                    if not self.modified_user.load():
+                        print("Member ID not found in ChocAn system")
+                    else:
+                        self.remove_user()
+                # Modify user menu
                 elif command == "3":
                     id = input("Enter the ID of the Member you would "
                           "like to modify: ")
@@ -108,7 +115,7 @@ class ChocAn:
                     self.menu.page = Menu.MenuPage.Main
                 else:
                     print("Invalid command. Please try again.")
-            #Modify User
+            #Modify User function
             elif self.menu.page == Menu.MenuPage.ModifyUser:
                 self.modify_user(command)
             # Manage reports
@@ -247,7 +254,17 @@ class ChocAn:
                     print("Invalid command. Please try again.")
 
     def remove_user(self):
-        pass
+        """Sets user ID to invalid which flags the ID to never be used again.
+        Users shall not be removed from system"""
+        print("This is the user to be removed from the ChocAn system...\n")
+        self.modified_user.display()
+        if utils.confirmation("Are you sure you want to remove this user? "
+                            "This action is PERMANENT: "):
+            self.modified_user.status = Person.Status.Invalid
+            print("The user has been deleted from the ChocAn system.")
+            return
+        else:
+            print("The user has not been removed from the ChocAn system.")
 
     def modify_user(self, command):
         """Modifies the chosen user

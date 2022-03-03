@@ -53,10 +53,12 @@ class Person:
 
         if not path.is_file():
             print(f"Could not load person with ID {id} from disk.")
-            return
+            return False
 
         with open(path, 'r') as file:
             self.__dict__.update(json.load(file))
+            
+        return True
 
     @staticmethod
     def get_file(id):
