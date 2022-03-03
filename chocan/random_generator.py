@@ -1,9 +1,11 @@
+import argparse
+import json
+import random
+
+from chocan import utils
 # pip install faker
 from faker import Faker
 from faker.providers import DynamicProvider
-import json
-import random
-import argparse
 from pathlib import Path
 
 
@@ -36,7 +38,8 @@ class RandomGenerator:
 
         return {
             "id": random_id,
-            "path": Path(".") / "restricted" / "users" / f"{random_id}.json"
+            "path": (utils.get_top_directory() / "restricted" / "users" /
+                f"{random_id}.json")
         }
 
     @staticmethod

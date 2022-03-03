@@ -8,6 +8,10 @@ class Alignment(Enum):
     Right = 2
 
 
+def get_top_directory():
+    return Path(__file__).parent.parent
+
+
 def check_file(file: Path):
     """Check if the file and its path are valid to write to. If the path does
     not exist, create it.

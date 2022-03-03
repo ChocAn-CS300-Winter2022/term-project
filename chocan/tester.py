@@ -4,6 +4,7 @@ import unittest
 from datetime import datetime
 from pathlib import Path
 
+from chocan import utils
 from chocan.chocan import ChocAn
 from chocan.menu import Menu
 from chocan.person import Person
@@ -40,8 +41,8 @@ class Tester(unittest.TestCase):
             report_count (int): number of reports to generate
             service_count (int): number of services to generate
         """
-        loaded_users = [file.stem for file
-            in (Path(".") / "restricted" / "users").glob("*.json")]
+        loaded_users = [file.stem for file in
+            (utils.get_top_directory() / "restricted" / "users").glob("*.json")]
         loaded_members = [user for user in loaded_users
             if not (user.startswith("8") or user.startswith("9"))]
         loaded_providers = [user for user in loaded_users

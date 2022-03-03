@@ -61,7 +61,7 @@ class Service:
                     f"{self.current_date.strftime('%Y%m%d_%H%M%S')}"
                     f".json")
 
-        path = Path(".") / "restricted" / "logs" / filename
+        path = utils.get_top_directory() / "restricted" / "logs" / filename
 
         if not utils.check_file(path):
             print("Could not write record to disk.")

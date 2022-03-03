@@ -1,5 +1,6 @@
 import argparse
 from argparse import RawTextHelpFormatter
+from pathlib import Path
 
 # import the ChocAn class from the file chocan/chocan.py
 from chocan.chocan import ChocAn

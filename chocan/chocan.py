@@ -16,7 +16,7 @@ class ChocAn:
         self.menu = Menu()
         self.current_person = None
 
-        path = Path(".") / "restricted" / "provider_directory.json"
+        path = utils.get_top_directory() / "restricted" / "provider_directory.json"
 
         if not path.is_file():
             print("Failed to load provider directory.")
@@ -28,7 +28,7 @@ class ChocAn:
     def run(self):
         """Run the ChocAn program."""
         quit = False
-        path = Path(".") / "restricted" / "users"
+        path = utils.get_top_directory() / "restricted" / "users"
         self.users = [file.stem for file in path.glob("*.json")]
 
         while not quit:
@@ -154,7 +154,7 @@ class ChocAn:
         print(" Provider Directory ".center(providers.index("\n"), "-"))
         print(providers)
 
-        path = Path(".") / "provider_directory.txt"
+        path = utils.get_top_directory() / "provider_directory.txt"
 
         if not utils.check_file(path):
             print("Could not write provider directory to file.")

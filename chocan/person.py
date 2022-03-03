@@ -61,4 +61,4 @@ class Person:
     @staticmethod
     def get_file(id):
         """Get the file that the person is stored in."""
-        return Path(".") / "restricted" / "users" / f"{id}.json"
+        return utils.get_top_directory() / "restricted" / "users" / f"{id}.json"
