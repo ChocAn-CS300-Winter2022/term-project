@@ -15,6 +15,7 @@ class ChocAn:
     def __init__(self):
         self.menu = Menu()
         self.current_person = None
+        self.modified_user = None
 
         path = utils.get_top_directory() / "restricted" / "provider_directory.json"
 
@@ -85,7 +86,7 @@ class ChocAn:
                 else:
                     print("Invalid command. Please try again.")
             # Manage users
-            elif self.menu.page == Menu.MenuPage.UserInformation:
+            elif self.menu.page == Menu.MenuPage.UserInformation:              
                 # Add user
                 if command == "1":
                     self.add_user()
@@ -94,34 +95,22 @@ class ChocAn:
                     self.remove_user()
                 # Modify user
                 elif command == "3":
-                    self.menu.page = Menu.MenuPage.ModifyUser
-                    # TODO: ask for ID to modify
-                # Back to terminal
+                    id = input("Enter the ID of the Member you would "
+                          "like to modify: ")
+                    self.modified_user = Person(id)
+                    # Back to terminal selection if load fails
+                    if not self.modified_user.load():
+                        print("Member ID not found in ChocAn system")
+                    else:
+                        self.menu.page = Menu.MenuPage.ModifyUser
+                # Back to terminal selection
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.Main
                 else:
                     print("Invalid command. Please try again.")
+            #Modify User
             elif self.menu.page == Menu.MenuPage.ModifyUser:
-                # Name
-                if command == "1":
-                    pass
-                # Address
-                elif command == "2":
-                    pass
-                # City
-                elif command == "3":
-                    pass
-                # State
-                elif command == "4":
-                    pass
-                # Zip code
-                elif command == "5":
-                    pass
-                # Back to user information
-                elif command == "0":
-                    self.menu.page = Menu.MenuPage.UserInformation
-                else:
-                    print("Invalid command. Please try again.")
+                self.modify_user(command)
             # Manage reports
             elif self.menu.page == Menu.MenuPage.Reports:
                 # Generate summary report
@@ -260,8 +249,62 @@ class ChocAn:
     def remove_user(self):
         pass
 
-    def modify_user(self):
-        pass
+    def modify_user(self, command):
+        """Modifies the chosen user
+
+        Args:
+            command (str): command from main function
+        """
+        # Name
+        if command == "1":
+            new_name = input("Enter user's new name: ")
+            if len(new_name) > 25:
+                print("User's new name is too long. Must be 25 "
+                    "characters or less.")
+            else:
+                self.modified_user.name = new_name
+                self.modified_user.save()
+        # Address
+        elif command == "2":
+            new_address = input("Enter user's new address: ")
+            if len(new_address) > 25:
+                print("User's new address is too long. Must be 25 "
+                    "characters or less.")
+            else:
+                self.modified_user.address = new_address
+                self.modified_user.save()
+        # City
+        elif command == "3":
+            new_city = input("Enter user's new city: ")
+            if len(new_city) > 14:
+                print("User's new city is too long. Must be 14 "
+                    "characters or less.")
+            else:
+                self.modified_user.city = new_city
+                self.modified_user.save()
+        # State
+        elif command == "4":
+            new_state = input("Enter user's new state: ")
+            if len(new_state) > 2:
+                print("User's new state is too long. Must be 2 "
+                    "characters or less.")
+            else:
+                self.modified_user.state = new_state
+                self.modified_user.save()
+        # Zip code
+        elif command == "5":
+            new_zip = input("Enter user's new zip code: ")
+            if len(new_zip) > 5:
+                print("User's new zip code is too long. Must be 2 "
+                    "characters or less.")
+            else:
+                self.modified_user.zip_code = new_zip
+                self.modified_user.save()
+        # Back to user information
+        elif command == "0":
+            self.menu.page = Menu.MenuPage.UserInformation
+        else:
+            print("Invalid command. Please try again.")
 
     def generate_summary_report(self):
         pass
