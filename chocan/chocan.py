@@ -237,7 +237,25 @@ class ChocAn:
         print(f"Fee: ${self.provider_directory[service_code]['fee']}")
 
     def add_user(self):
-        pass
+        create_provider = False
+
+        if self.current_person.id.startswith("9"):
+            command = ""
+
+            while command == "":
+                print("1) Create a new Member")
+                print("2) Create a new Provider")
+                print("0) Back")
+
+                command = input("> ")
+                create_provider = True if command == "3" else False
+
+                if command == "2":
+                    pass
+                elif command == "3":
+                    pass
+                else:
+                    print("Invalid command. Please try again.")
 
     def remove_user(self):
         pass
