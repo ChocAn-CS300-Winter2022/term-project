@@ -1,5 +1,6 @@
 import argparse
 import random
+import unittest
 from datetime import datetime
 from pathlib import Path
 
@@ -10,7 +11,7 @@ from chocan.service import Service
 from chocan.reports.report import Report
 
 
-class Tester:
+class Tester(unittest.TestCase):
     class TesterArgumentValidator(argparse.Action):
         def __call__(self, parser, args, values, option_string=None):
             report_count, service_count = values
@@ -28,7 +29,7 @@ class Tester:
             setattr(args, self.dest, (report_count, service_count))
 
     @staticmethod
-    def run_test(program: ChocAn, report_count, service_count):
+    def generate_reports(program: ChocAn, report_count, service_count):
         loaded_users = [file.stem for file
             in (Path(".") / "restricted" / "users").glob("*.json")]
         loaded_members = [user for user in loaded_users
@@ -74,3 +75,7 @@ class Tester:
                 provider_report.services.append(service)
 
             provider_report.write(program.provider_directory)
+
+    def test___init___success(self):
+        report = Report()
+        self.assertEqual({report.services, report.report}, {[], ""})
