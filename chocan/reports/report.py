@@ -61,8 +61,8 @@ class Report:
         Returns:
             Path: path of the text file to be written
         """
-        folder = "providers" if person.id.startswith("8") or \
-            person.id.startswith("9") else "members"
+        folder = "providers" if person.is_provider() or \
+            person.is_manager() else "members"
 
         return utils.get_top_directory() / "reports" / folder / \
                f"{datetime.now().date().strftime('%Y%m%d')}_{person.id}.txt"

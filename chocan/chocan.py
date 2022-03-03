@@ -1,7 +1,6 @@
 import json
 import re
 from datetime import datetime
-from pathlib import Path
 
 from chocan import utils
 from chocan.utils import Alignment
@@ -35,7 +34,7 @@ class ChocAn:
         while not quit:
             command = self.menu.display(
                 self.current_person is not None and
-                self.current_person.id.startswith("9"))
+                self.current_person.is_manager())
 
             # Login page
             if self.menu.page == Menu.MenuPage.LogIn:
@@ -63,7 +62,7 @@ class ChocAn:
                 # Back to login
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.LogIn
-                elif self.current_person.id.startswith("9"):
+                elif self.current_person.is_manager():
                     # Manage users
                     if command == "2":
                         self.menu.page = Menu.MenuPage.UserInformation
@@ -92,23 +91,51 @@ class ChocAn:
                     self.add_user()
                 # Remove user
                 elif command == "2":
-                    id = input("Enter the ID of the Member you would "
-                          "like to remove: ")
-                    self.modified_user = Person(id)
+                    id_valid = False
+
+                    while not id_valid:
+                        id = input("Enter the ID of the user to remove: ")
+
+                        if self.current_person.is_provider():
+                            if not id.startswith("8") and not id.startswith("9"):
+                                id_valid = True
+                        else:
+                            if not id.startswith("9"):
+                                id_valid = True
+
+                        if id not in self.users:
+                            id_valid = False
+
+                        if not id_valid:
+                            print("Invalid ID. Please try again.")
+
+                    user = Person(id)
                     # Back to terminal selection if load fails
-                    if not self.modified_user.load():
-                        print("Member ID not found in ChocAn system")
-                    else:
-                        self.remove_user()
+                    if user.load():
+                        self.remove_user(user)
                 # Modify user menu
                 elif command == "3":
-                    id = input("Enter the ID of the Member you would "
-                          "like to modify: ")
+                    id_valid = False
+
+                    while not id_valid:
+                        id = input("Enter the ID of the user to modify: ")
+
+                        if self.current_person.is_provider():
+                            if not id.startswith("8") and not id.startswith("9"):
+                                id_valid = True
+                        else:
+                            if not id.startswith("9"):
+                                id_valid = True
+
+                        if id not in self.users:
+                            id_valid = False
+
+                        if not id_valid:
+                            print("Invalid ID. Please try again.")
+
                     self.modified_user = Person(id)
                     # Back to terminal selection if load fails
-                    if not self.modified_user.load():
-                        print("Member ID not found in ChocAn system")
-                    else:
+                    if self.modified_user.load():
                         self.menu.page = Menu.MenuPage.ModifyUser
                 # Back to terminal selection
                 elif command == "0":
@@ -178,7 +205,7 @@ class ChocAn:
             print("Member suspended until dues are paid.")
             return
 
-        if self.current_person.id.startswith("9"):
+        if self.current_person.is_manager():
             provider_id = ""
 
             while provider_id not in self.users or \
@@ -233,9 +260,10 @@ class ChocAn:
         print(f"Fee: ${self.provider_directory[service_code]['fee']}")
 
     def add_user(self):
+        """Add a user."""
         create_provider = False
 
-        if self.current_person.id.startswith("9"):
+        if self.current_person.is_manager():
             command = ""
 
             while command == "":
@@ -243,56 +271,66 @@ class ChocAn:
                 print("1) Create a new Member")
                 print("2) Create a new Provider")
                 print("0) Back")
-                print(" Services ".center(67, "="))
+                print(67 * "=")
 
                 command = input("> ")
                 #use this to check if making a provider to save input
                 #commands
                 create_provider = True if command == "2" else False
 
-                if command == "1" or command == "2":
-                    name = input("Enter first and last name: ")
-                    address = input("Enter address: ")
-                    city = input("Enter city: ")
-                    state = input("Enter state: ")
-                    zip_code = input("Enter zip code: ")
-
-                    id = ""
-                    id_valid = False
-
-                    while not id_valid:
-                        id = RandomGenerator.generate_id("providers" if
-                            create_provider else "members")
-                        if id["id"] not in self.users:
-                            id_valid = True
-
-                    new_user = Person(id["id"], name, address, city, state,
-                        zip_code)
-                    new_user.display()
-                    new_user.save()
-
-                    if utils.confirmation(f"Do you want to modify {name}?"):
-                        self.menu.page = Menu.MenuPage.ModifyUser
+                if command == "1":
+                    create_provider = False
+                elif command == "2":
+                    create_provider = True
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.UserInformation
                 else:
                     print("Invalid command. Please try again.")
 
-    def remove_user(self):
-        """Sets user ID to invalid which flags the ID to never be used again.
-        Users shall not be removed from system"""
-        print("This is the user to be removed from the ChocAn system...\n")
-        self.modified_user.display()
-        if utils.confirmation("Are you sure you want to remove this user? "
-                            "This action is PERMANENT: "):
-            self.modified_user.status = Person.Status.Invalid
-            print("The user has been deleted from the ChocAn system.")
-            return
+        name = input("Enter first and last name: ")
+        address = input("Enter address: ")
+        city = input("Enter city: ")
+        state = input("Enter state: ")
+        zip_code = input("Enter zip code: ")
+
+        id = ""
+        id_valid = False
+
+        while not id_valid:
+            id = RandomGenerator.generate_id("providers" if
+                create_provider else "members")
+            if id["id"] not in self.users:
+                id_valid = True
+
+        new_user = Person(id["id"], name, address, city, state,
+            zip_code)
+        new_user.display()
+        new_user.save()
+
+        if utils.confirmation(f"Do you want to modify {name}?"):
+            self.menu.page = Menu.MenuPage.ModifyUser
+
+    def remove_user(self, user):
+        """Sets user ID to invalid. Users are not removed from the system. The
+        ID may not be used again.
+
+        Args:
+            user (Person): user to remove
+        """
+        user.display()
+
+        print()
+
+        if utils.confirmation(f"Are you sure you want to remove {user.name}? "
+                               "This action is permanent."):
+            user.status = Person.Status.Invalid
+            user.save()
+            print("The user has been removed.")
         else:
-            print("The user has not been removed from the ChocAn system.")
+            print("Cancelled removing user.")
 
     def modify_user(self, command):
-        """Modifies the chosen user
+        """Modifies the chosen user.
 
         Args:
             command (str): command from main function

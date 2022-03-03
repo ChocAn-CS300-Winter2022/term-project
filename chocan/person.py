@@ -60,6 +60,22 @@ class Person:
 
         return True
 
+    def is_provider(self):
+        """Return whether a Person is a provider.
+
+        Returns:
+            bool: whether Person is a provider
+        """
+        return self.id.startswith("8")
+
+    def is_manager(self):
+        """Return whether a Person is a manager.
+
+        Returns:
+            bool: whether a Person is a manager
+        """
+        return self.id.startswith("9")
+
     @staticmethod
     def get_file(id):
         """Get the file that the person is stored in."""
