@@ -30,10 +30,10 @@ if __name__ == "__main__":
 
     program = ChocAn()
 
-    if args.generate:
+    if args.generate_users:
         RandomGenerator.generate(args.generate[0], args.generate[1])
 
-    if args.test:
+    if args.generate_reports:
         Tester.run_test(program, args.test[0], args.test[1])
 
     program.run()
