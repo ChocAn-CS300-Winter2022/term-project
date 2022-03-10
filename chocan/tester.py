@@ -6,8 +6,6 @@ from unittest.mock import patch
 from datetime import datetime
 from pathlib import Path
 
-from defer import return_value
-
 from chocan import utils
 from chocan.chocan import ChocAn
 from chocan.menu import Menu
