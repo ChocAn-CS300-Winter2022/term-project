@@ -266,6 +266,7 @@ class ChocAn:
             command = ""
 
             while command == "":
+                print()
                 print(" Services ".center(67, "="))
                 print("1) Create a new Member")
                 print("2) Create a new Provider")
@@ -283,6 +284,7 @@ class ChocAn:
                     create_provider = True
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.UserInformation
+                    return
                 else:
                     print("Invalid command. Please try again.")
 
