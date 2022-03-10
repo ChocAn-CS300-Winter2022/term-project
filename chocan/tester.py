@@ -69,6 +69,7 @@ class Tester(unittest.TestCase):
             for i in range(service_count):
                 service = Service(datetime.now(), random.choice(providers),
                     member, random.choice(service_codes))
+                service.generate_record(program.provider_directory)
 
                 report.services.append(service)
 
