@@ -45,9 +45,7 @@ class Menu:
             print(" Main Menu ".center(67, "="))
             print("1) Manage services")
 
-            if not is_manager:
-                print("2) Member information")
-            else:
+            if is_manager:
                 print("2) Member or provider information")
                 print("3) Reports")
 

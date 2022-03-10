@@ -59,17 +59,15 @@ class ChocAn:
                 # Manage services
                 if command == "1":
                     self.menu.page = Menu.MenuPage.Services
-                # Manage members
-                elif command == "2":
-                    self.menu.page = Menu.MenuPage.UserInformation
-                elif command == "3":
-                    if self.current_person.is_manager():
-                        self.menu.page = Menu.MenuPage.Reports
-                    else:
-                        print("Invalid command. Please try again.")
                 # Back to login
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.LogIn
+                # Manage members
+                elif self.current_person.is_manager():
+                    if command == "2":
+                        self.menu.page = Menu.MenuPage.UserInformation
+                    elif command == "3":
+                            self.menu.page = Menu.MenuPage.Reports
                 else:
                     print("Invalid command. Please try again.")
             # Manage services
