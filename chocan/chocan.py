@@ -383,10 +383,24 @@ class ChocAn:
             print("Invalid command. Please try again.")
 
     def generate_summary_report(self):
+        # TODO: summary report
+        #   Gather all records from last week
+        #   Create new SummaryReport()
+        #   Write to disk
         pass
 
     def generate_member_report(self):
+        # TODO: member report
+        #   Ask for member ID or all members
+        #   Gather records for ID or all from last week (regex)
+        #   Create new MemberReport() (or multiple if all)
+        #   Write to disk
         pass
 
     def generate_provider_report(self):
+        # TODO: provider report
+        #   Ask for provider/manager ID or all
+        #   Gather records for ID or all from last week (regex)
+        #   Create new ProviderReport() (or multiple if all)
+        #   Write to disk
         pass
