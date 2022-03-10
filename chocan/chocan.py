@@ -384,6 +384,7 @@ class ChocAn:
             print("Invalid command. Please try again.")
 
     def generate_summary_report(self):
+        """Generate a summary report from the last week."""
         report = SummaryReport()
         report.write(self.provider_directory)
         report.display(self.provider_directory)
