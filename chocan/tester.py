@@ -13,6 +13,7 @@ from chocan import utils
 from chocan.chocan import ChocAn
 from chocan.menu import Menu
 from chocan.person import Person
+from chocan.random_generator import RandomGenerator
 from chocan.reports.report import Report
 from chocan.reports.provider_report import ProviderReport
 from chocan.reports.summary_report import SummaryReport
@@ -259,3 +260,13 @@ class Tester(unittest.TestCase):
         self.assertEqual((summary_report.services, summary_report.report), 
             ([], ""))
 
+    
+    """RANDOM_GENERATOR.PY"""
+    @patch('chocan.utils.get_top_directory', return_value=Path("test"))
+    def test_generate_id_provider(self, mock_get_top_directory):
+        id_info = RandomGenerator.generate_id("providers")
+        id = id_info["id"]
+        expected_path = Path(f"test/restricted/users/{id}.json")
+        self.assertGreaterEqual(id, "800000000")
+        self.assertLessEqual(id, "899999999")
+        self.assertEqual(id_info["path"], expected_path)
