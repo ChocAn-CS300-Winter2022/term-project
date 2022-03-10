@@ -93,15 +93,17 @@ class Tester(unittest.TestCase):
 
             provider_report.write(program.provider_directory)
 
+
+    """CHOCAN.PY"""
     def test_chocan_init_success(self):
         """Test ChocAn initialization."""
         chocan = ChocAn()
-        self.assertEqual((chocan.menu.page, chocan.current_person),
-            (Menu.MenuPage.LogIn, None))
+        self.assertEqual((chocan.menu.page, chocan.current_person, chocan.modified_user),
+            (Menu.MenuPage.LogIn, None, None))
 
     @patch('chocan.utils.confirmation', return_value = True)
     @patch('chocan.person')
-    def test_remove_user_pick_yes(self, mock_confirmation, mock_user):
+    def test_chocan_remove_user_pick_yes(self, mock_confirmation, mock_user):
         """Test Selecting to Remove User"""
         chocan = ChocAn()
 
@@ -112,7 +114,7 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.confirmation', return_value = False)
     @patch('chocan.person')
-    def test_remove_user_pick_no(self, mock_confirmation, mock_user):
+    def test_chocan_remove_user_pick_no(self, mock_confirmation, mock_user):
         """Test Selecting to Not Remove User"""
         chocan = ChocAn()
 
@@ -197,12 +199,49 @@ class Tester(unittest.TestCase):
             (date, provider, member, service_code, 
             ""))
 
+    @patch('json.dump', return_value=None)
+    def test_service_generate_record(self, mock_dump):
+        date = datetime.today().date()
+        provider = Person()
+        member = Person()
+        service_code = "999999"
+        service = Service(date, provider, member, service_code)
+        service.generate_record({})
+        mock_dump.assert_called_once()
+        #TODO: make it not actually call the dump method
 
     """REPORT.PY"""
     def test_report_init_success(self):
         """Test Report initialization."""
         report = Report()
         self.assertEqual((report.services, report.report), ([], ""))
+
+    @patch('chocan.utils.get_top_directory', return_value=Path("test"))
+    def test_report_get_file_success_provider(self, mock_get_top_directory):
+        provider = Person("888888888")
+        file = Report.get_file(provider)
+        expected = "test/reports/providers/" + \
+            f"{datetime.now().date().strftime('%Y%m%d')}_888888888.txt"
+        expected = Path(expected)
+        self.assertEqual(file, expected)
+
+    @patch('chocan.utils.get_top_directory', return_value=Path("test"))
+    def test_report_get_file_success_manager(self, mock_get_top_directory):
+        manager = Person("999999999")
+        file = Report.get_file(manager)
+        expected = "test/reports/providers/" + \
+            f"{datetime.now().date().strftime('%Y%m%d')}_999999999.txt"
+        expected = Path(expected)
+        self.assertEqual(file, expected)
+
+    @patch('chocan.utils.get_top_directory', return_value=Path("test"))
+    def test_report_get_file_success_member(self, mock_get_top_directory):
+        member = Person("777777777")
+        file = Report.get_file(member)
+        expected = "test/reports/members/" + \
+            f"{datetime.now().date().strftime('%Y%m%d')}_777777777.txt"
+        expected = Path(expected)
+        self.assertEqual(file, expected)
 
     def test_provider_report_init_success(self):
         """Test Provider Report initialization."""
