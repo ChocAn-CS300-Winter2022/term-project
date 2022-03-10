@@ -339,8 +339,7 @@ class ChocAn:
         if command == "1":
             new_name = input("Enter user's new name: ")
             if len(new_name) > 25:
-                print("User's new name is too long. Must be 25 "
-                    "characters or less.")
+                print("User's new name must be 25 characters or less.")
             else:
                 self.modified_user.name = new_name
                 self.modified_user.save()
@@ -348,8 +347,7 @@ class ChocAn:
         elif command == "2":
             new_address = input("Enter user's new address: ")
             if len(new_address) > 25:
-                print("User's new address is too long. Must be 25 "
-                    "characters or less.")
+                print("User's new address must be 25 characters or less.")
             else:
                 self.modified_user.address = new_address
                 self.modified_user.save()
@@ -357,26 +355,23 @@ class ChocAn:
         elif command == "3":
             new_city = input("Enter user's new city: ")
             if len(new_city) > 14:
-                print("User's new city is too long. Must be 14 "
-                    "characters or less.")
+                print("User's new city must be 14 characters or less.")
             else:
                 self.modified_user.city = new_city
                 self.modified_user.save()
         # State
         elif command == "4":
             new_state = input("Enter user's new state: ")
-            if len(new_state) > 2:
-                print("User's new state is too long. Must be 2 "
-                    "characters or less.")
+            if len(new_state) != 2:
+                print("User's new state must be 2 characters exactly.")
             else:
                 self.modified_user.state = new_state
                 self.modified_user.save()
         # Zip code
         elif command == "5":
             new_zip = input("Enter user's new zip code: ")
-            if len(new_zip) > 5:
-                print("User's new zip code is too long. Must be 2 "
-                    "characters or less.")
+            if len(new_zip) != 5:
+                print("User's new zip code must be 5 characters exactly.")
             else:
                 self.modified_user.zip_code = new_zip
                 self.modified_user.save()
