@@ -117,4 +117,6 @@ class Tester(unittest.TestCase):
     def test_person_init_success(self):
         """Test Person initialization."""
         person = Person()
-        self.assertEqual(())
+        self.assertEqual((person.id, person.name, person.address,
+        person.city, person.state, person.zip_code, person.status),
+            ("", "", "", "", "", "", Person.Status.Valid))
