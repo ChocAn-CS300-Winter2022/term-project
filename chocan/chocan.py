@@ -3,12 +3,13 @@ import re
 from datetime import datetime
 
 from chocan import utils
-from chocan.utils import Alignment
 from chocan.menu import Menu
 from chocan.person import Person
-from chocan.reports.report import Report
-from chocan.service import Service
 from chocan.random_generator import RandomGenerator
+from chocan.reports.report import Report
+from chocan.reports.summary_report import SummaryReport
+from chocan.service import Service
+from chocan.utils import Alignment
 
 class ChocAn:
     def __init__(self):
@@ -383,11 +384,9 @@ class ChocAn:
             print("Invalid command. Please try again.")
 
     def generate_summary_report(self):
-        # TODO: summary report
-        #   Gather all records from last week
-        #   Create new SummaryReport()
-        #   Write to disk
-        pass
+        report = SummaryReport()
+        report.write(self.provider_directory)
+        report.display(self.provider_directory)
 
     def generate_member_report(self):
         # TODO: member report

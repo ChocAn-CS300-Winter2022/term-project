@@ -1,46 +1,91 @@
+import datetime
+import json
+import re
 from pathlib import Path
 
 from chocan import utils
+from chocan.utils import Alignment
+from chocan.person import Person
+from chocan.reports.report import Report
 
-#      Name      | Consultations |   Fee
-# -----------------------------------------
-# Cecelia Carson |            10 |  $999.99
-# Jessica Ware   |             3 |  $124.99
-# Kyle Wilkinson |            29 | $1049.99
 
-# Total providers:     3
-# Total consultations: 42
-# Total fee:           $2174.97
+class SummaryReport(Report):
+    def generate_report(self, provider_directory):
+        """Generate a summary report.
 
-# TODO: Summary Report
-class SummaryReport:
-    def __init__(self):
-        self.providers = {}
+        Args:
+            provider_directory (dict): provider directory loaded in ChocAn
+        """
         self.report = ""
+        self.path = self.get_file()
 
-    def write(self, provider_directory):
-        """Write the report to disk."""
-        self.generate_report(provider_directory)
+        # Get the last week (Monday-Friday)
+        dates = self.get_week()
+        # Get all records in the "logs" folder
+        all_records = list((utils.get_top_directory() / "restricted" /
+            "logs").iterdir())
 
-        if not utils.check_file(self.path):
-            print(f"Could not write summary report to disk.")
-            return
+        # Get only the records for the week
+        r = re.compile(f"(" + "|".join(dates) + ")")
+        week_records = [file for file in all_records if r.search(file.name)]
+        loaded_records = []
 
-        with open(self.path, 'w') as file:
-            file.write(self.report)
+        # Load each record from JSON
+        for record in week_records:
+            with open(record, 'r') as file:
+                loaded_records.append(json.load(file))
 
-    def display(self, provider_directory):
-        """Display the report in the terminal."""
-        if not self.report:
-            if utils.confirmation("No report found. Generate it?"):
-                self.generate_report(provider_directory)
-                print()
-            else:
-                print("No report to display.")
-                return
+        # Get each provider and service as a tuple
+        services = [(service["provider"], service["service_code"])
+                             for service in loaded_records]
+        # Then get each unique provider ID
+        providers = set(tuple[0] for tuple in services)
 
-        print(self.report)
-        self.report = ""
+        names = []
+        consultations = []
+        fees = []
 
-    def generate_report(self):
-        pass
+        for id in providers:
+            provider = Person(id)
+
+            if not provider.load():
+                continue
+
+            # Get the service IDs for each provider
+            service_ids = [tuple[1] for tuple in services if tuple[0] == id]
+            fee = 0.0
+
+            # Calculate the total fee from each service code
+            for consult in service_ids:
+                fee += float(provider_directory[consult]["fee"])
+
+            # Then append the name, total consultations, and total fee
+            names.append(provider.name)
+            consultations.append(len(service_ids))
+            fees.append(fee)
+
+        self.report += utils.tabulate(
+            ["Name", "Consultations", "Fee"],
+            list(zip(names, consultations, ["${:.2f}".format(fee) for fee in fees])),
+            [Alignment.Left, Alignment.Right, Alignment.Right]) + "\n"
+        self.report += f"Total providers:     {len(providers)}\n"
+        self.report += f"Total consultations: {sum(consultations)}\n"
+        self.report += f"Total fee:           ${'%.2f' % sum(fees)}\n"
+
+    @staticmethod
+    def get_week():
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+
+        return [(monday + datetime.timedelta(days=d)).strftime("%Y%m%d")
+                for d in range(5)]
+
+    @staticmethod
+    def get_file():
+        """Get the file that the report should be written to.
+
+        Returns:
+            Path: path of the text file to be written
+        """
+        return utils.get_top_directory() / "reports" / "summaries" / \
+               f"{datetime.datetime.now().date().strftime('%Y%m%d')}.txt"

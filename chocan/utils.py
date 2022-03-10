@@ -74,7 +74,7 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
         # Loop through the column names and print them
         for i in range(col_count):
             name_len = len(col_names[i])
-            data_len = max([len(val[i]) for val in row_tuples])
+            data_len = max([len(str(val[i])) for val in row_tuples])
 
             # Store the longest choice, column name length or data length
             column_lengths.append(name_len if name_len > data_len else data_len)
@@ -94,11 +94,11 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
             for j in range(col_count):
                 # Determine which column alignment to use, default left
                 if j > align_count - 1 or col_alignments[j] == Alignment.Left:
-                    text += f"{row_tuples[i][j].ljust(column_lengths[j])}"
+                    text += f"{str(row_tuples[i][j]).ljust(column_lengths[j])}"
                 elif col_alignments[j] == Alignment.Center:
-                    text += f"{row_tuples[i][j].center(column_lengths[j])}"
+                    text += f"{str(row_tuples[i][j]).center(column_lengths[j])}"
                 elif col_alignments[j] == Alignment.Right:
-                    text += f"{row_tuples[i][j].rjust(column_lengths[j])}"
+                    text += f"{str(row_tuples[i][j]).rjust(column_lengths[j])}"
 
                 # Print a separator between each element
                 if j < col_count - 1:

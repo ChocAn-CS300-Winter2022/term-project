@@ -11,7 +11,11 @@ class Report:
         self.report = ""
 
     def write(self, provider_directory):
-        """Write the report to disk."""
+        """Write the report to disk.
+
+        Args:
+            provider_directory (dict): provider directory loaded in ChocAn
+        """
         self.generate_report(provider_directory)
 
         if not utils.check_file(self.path):
@@ -23,7 +27,11 @@ class Report:
             file.write(self.report)
 
     def display(self, provider_directory):
-        """Display the report in the terminal."""
+        """Display the report in the terminal.
+
+        Args:
+            provider_directory (dict): provider directory loaded in ChocAn
+        """
         if not self.report:
             if utils.confirmation("No report found. Generate it?"):
                 self.generate_report(provider_directory)
@@ -36,7 +44,11 @@ class Report:
         self.report = ""
 
     def generate_report(self, provider_directory):
-        """Generate the report text."""
+        """Generate the report text.
+
+        Args:
+            provider_directory (dict): provider directory loaded in ChocAn
+        """
         self.report = ""
         member = self.services[0].member
         self.path = self.get_file(member)
