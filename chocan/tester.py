@@ -148,3 +148,4 @@ class Tester(unittest.TestCase):
         self.assertEqual((person.id, person.name, person.address,
         person.city, person.state, person.zip_code, person.status),
             ("", "", "", "", "", "", Person.Status.Valid))
+
