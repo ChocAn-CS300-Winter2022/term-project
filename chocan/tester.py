@@ -200,7 +200,8 @@ class Tester(unittest.TestCase):
             ""))
 
     @patch('json.dump', return_value=None)
-    def test_service_generate_record(self, mock_dump):
+    def test_service_generate_record_success(self, mock_dump):
+        """Test generating service record"""
         date = datetime.today().date()
         provider = Person()
         member = Person()
@@ -218,6 +219,7 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_report_get_file_success_provider(self, mock_get_top_directory):
+        """Test getting file path for a Provider"""
         provider = Person("888888888")
         file = Report.get_file(provider)
         expected = "test/reports/providers/" + \
@@ -227,6 +229,7 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_report_get_file_success_manager(self, mock_get_top_directory):
+        """Test getting file path for a Manager"""
         manager = Person("999999999")
         file = Report.get_file(manager)
         expected = "test/reports/providers/" + \
@@ -236,6 +239,7 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_report_get_file_success_member(self, mock_get_top_directory):
+        """Test getting file path for a Member"""
         member = Person("777777777")
         file = Report.get_file(member)
         expected = "test/reports/members/" + \
