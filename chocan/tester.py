@@ -1,10 +1,13 @@
 import argparse
 import random
+from shutil import register_unpack_format
 import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
 from datetime import datetime
 from pathlib import Path
+
+from defer import return_value
 
 from chocan import utils
 from chocan.chocan import ChocAn
@@ -90,6 +93,112 @@ class Tester(unittest.TestCase):
 
             provider_report.write(program.provider_directory)
 
+    def test_chocan_init_success(self):
+        """Test ChocAn initialization."""
+        chocan = ChocAn()
+        self.assertEqual((chocan.menu.page, chocan.current_person),
+            (Menu.MenuPage.LogIn, None))
+
+    @patch('chocan.utils.confirmation', return_value = True)
+    @patch('chocan.person')
+    def test_remove_user_pick_yes(self, mock_confirmation, mock_user):
+        """Test Selecting to Remove User"""
+        chocan = ChocAn()
+
+        chocan.remove_user(mock_user)
+        mock_user.save.assert_called_once()
+
+        self.assertEqual(mock_user.status, Person.Status.Invalid)
+
+    @patch('chocan.utils.confirmation', return_value = False)
+    @patch('chocan.person')
+    def test_remove_user_pick_no(self, mock_confirmation, mock_user):
+        """Test Selecting to Not Remove User"""
+        chocan = ChocAn()
+
+        mock_user.status = Person.Status.Valid
+        chocan.remove_user(mock_user)
+        mock_user.save.assert_not_called()
+
+        self.assertEqual(mock_user.status, Person.Status.Valid)
+
+
+    """MENU.PY"""
+    def test_menu_init_success(self):
+        """Test Menu initialization."""
+        menu = Menu()
+        self.assertEqual(menu.page, Menu.MenuPage.LogIn)
+
+
+    """PERSON.PY"""
+    def test_person_init_success(self):
+        """Test Person initialization."""
+        person = Person()
+        self.assertEqual((person.id, person.name, person.address,
+        person.city, person.state, person.zip_code, person.status),
+            ("", "", "", "", "", "", Person.Status.Valid))
+
+    def test_person_is_provider_success(self):
+        """Test Person is_provider."""
+        person = Person()
+        person.id = '800000000'
+        self.assertTrue(person.is_provider())
+    
+    def test_person_is_provider_failure(self):
+        """Test Person is_provider."""
+        person = Person()
+        person.id = '900000000'
+        self.assertFalse(person.is_provider())
+
+    def test_person_is_manager_success(self):
+        """Test Person is_manager."""
+        person = Person()
+        person.id = '900000000'
+        self.assertTrue(person.is_manager())
+    
+    def test_person_is_manager_failure(self):
+        """Test Person is_manager."""
+        person = Person()
+        person.id = '800000000'
+        self.assertFalse(person.is_manager())
+
+    @patch('chocan.utils.get_top_directory', 
+            return_value = Path("test"))
+    def test_person_get_file_success(self, mock_get_top_directory):
+        """Test Person get_file"""
+        actual_file_path = Person.get_file('123456789')
+        expected_file_path = Path("test/restricted/users/123456789.json")
+        self.assertEqual(actual_file_path, expected_file_path)
+
+
+    """SERVICE.PY"""
+   # @patch('datetime.now', return_value=10)
+    def test_service_init_provided_datetime(self):
+        """Test Service init with datetime provided"""
+        date = datetime.today().date()
+        provider = Person()
+        member = Person()
+        service_code = "999999"
+        service = Service(date, provider, member, service_code)
+        self.assertEqual((service.date_provided, service.provider, 
+            service.member, service.service_code, service.comments),
+            (date, provider, member, service_code, 
+            ""))
+
+    def test_service_init_provided_string(self):
+        """Test Service init with string provided"""
+        date = "2020-03-10"
+        provider = Person()
+        member = Person()
+        service_code = "999999"
+        service = Service(date, provider, member, service_code)
+        self.assertEqual((service.date_provided, service.provider, 
+            service.member, service.service_code, service.comments),
+            (date, provider, member, service_code, 
+            ""))
+
+
+    """REPORT.PY"""
     def test_report_init_success(self):
         """Test Report initialization."""
         report = Report()
@@ -104,46 +213,6 @@ class Tester(unittest.TestCase):
     def test_summary_report_init_success(self):
         """Test Summary Report initialization."""
         summary_report = SummaryReport()
-        # TODO: assert summary report
-
-    def test_chocan_init_success(self):
-        """Test ChocAn initialization."""
-        chocan = ChocAn()
-        self.assertEqual((chocan.menu.page, chocan.current_person),
-            (Menu.MenuPage.LogIn, None))
-
-    @patch('chocan.utils.confirmation', return_value = True)
-    @patch('chocan.person')
-    def test_remove_user_success(self, mock_confirmation, mock_user):
-        """Test Selecting to Remove User"""
-        chocan = ChocAn()
-
-        chocan.remove_user(mock_user)
-        mock_user.save.assert_called_once()
-
-        self.assertEqual(mock_user.status, Person.Status.Invalid)
-
-    @patch('chocan.utils.confirmation', return_value = False)
-    @patch('chocan.person')
-    def test_remove_user_failure(self, mock_confirmation, mock_user):
-        """Test Selecting to Not Remove User"""
-        chocan = ChocAn()
-
-        mock_user.status = Person.Status.Valid
-        chocan.remove_user(mock_user)
-        mock_user.save.assert_not_called()
-
-        self.assertEqual(mock_user.status, Person.Status.Valid)
-
-    def test_menu_init_success(self):
-        """Test Menu initialization."""
-        menu = Menu()
-        self.assertEqual(menu.page, Menu.MenuPage.LogIn)
-
-    def test_person_init_success(self):
-        """Test Person initialization."""
-        person = Person()
-        self.assertEqual((person.id, person.name, person.address,
-        person.city, person.state, person.zip_code, person.status),
-            ("", "", "", "", "", "", Person.Status.Valid))
+        self.assertEqual((summary_report.services, summary_report.report), 
+            ([], ""))
 
