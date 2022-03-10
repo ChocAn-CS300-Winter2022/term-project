@@ -52,7 +52,7 @@ class Service:
             "date_provided": self.date_provided.strftime("%m-%d-%Y"),
             "provider": self.provider.id,
             "member": self.member.id,
-            "service_code": provider_directory[self.service_code]["name"],
+            "service_code": self.service_code,
             "comments": self.comments
         }
 
