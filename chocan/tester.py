@@ -1,8 +1,12 @@
 import argparse
 import random
 import unittest
+from unittest.mock import Mock
+from unittest.mock import patch
 from datetime import datetime
 from pathlib import Path
+
+from defer import return_value
 
 from chocan import utils
 from chocan.chocan import ChocAn
@@ -109,6 +113,29 @@ class Tester(unittest.TestCase):
         chocan = ChocAn()
         self.assertEqual((chocan.menu.page, chocan.current_person),
             (Menu.MenuPage.LogIn, None))
+
+    @patch('chocan.utils.confirmation', return_value = True)
+    @patch('chocan.person')
+    def test_remove_user_success(self, mock_confirmation, mock_user):
+        """Test Selecting to Remove User"""
+        chocan = ChocAn()
+
+        chocan.remove_user(mock_user)
+        mock_user.save.assert_called_once()
+
+        self.assertEqual(mock_user.status, Person.Status.Invalid)
+
+    @patch('chocan.utils.confirmation', return_value = False)
+    @patch('chocan.person')
+    def test_remove_user_failure(self, mock_confirmation, mock_user):
+        """Test Selecting to Not Remove User"""
+        chocan = ChocAn()
+
+        mock_user.status = Person.Status.Valid
+        chocan.remove_user(mock_user)
+        mock_user.save.assert_not_called()
+
+        self.assertEqual(mock_user.status, Person.Status.Valid)
 
     def test_menu_init_success(self):
         """Test Menu initialization."""
