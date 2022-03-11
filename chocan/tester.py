@@ -72,7 +72,7 @@ class Tester(unittest.TestCase):
             for i in range(service_count):
                 service = Service(datetime.now(), random.choice(providers),
                     member, random.choice(service_codes))
-                service.generate_record()
+                service.generate_record(program.provider_directory)
 
                 report.services.append(service)
 
@@ -179,7 +179,7 @@ class Tester(unittest.TestCase):
         person = Person()
         person.id = '800000000'
         self.assertTrue(person.is_provider())
-
+    
     def test_person_is_provider_failure(self):
         """Test Person is_provider."""
         person = Person()
@@ -191,7 +191,7 @@ class Tester(unittest.TestCase):
         person = Person()
         person.id = '900000000'
         self.assertTrue(person.is_manager())
-
+    
     def test_person_is_manager_failure(self):
         """Test Person is_manager."""
         person = Person()
@@ -214,9 +214,9 @@ class Tester(unittest.TestCase):
         member = Person()
         service_code = "999999"
         service = Service(date, provider, member, service_code)
-        self.assertEqual((service.date_provided, service.provider,
+        self.assertEqual((service.date_provided, service.provider, 
             service.member, service.service_code, service.comments),
-            (date, provider, member, service_code,
+            (date, provider, member, service_code, 
             ""))
 
     def test_service_init_provided_string(self):
@@ -226,9 +226,9 @@ class Tester(unittest.TestCase):
         member = Person()
         service_code = "999999"
         service = Service(date, provider, member, service_code)
-        self.assertEqual((service.date_provided, service.provider,
+        self.assertEqual((service.date_provided, service.provider, 
             service.member, service.service_code, service.comments),
-            (date, provider, member, service_code,
+            (date, provider, member, service_code, 
             ""))
 
     @patch('json.dump', return_value=True)
@@ -249,14 +249,15 @@ class Tester(unittest.TestCase):
         """Test Report initialization."""
         report = Report()
         self.assertEqual((report.services, report.report), ([], ""))
-"""
+
     @patch('builtins.open', new_callable=mock_open, read_data="data")
     @patch('chocan.utils.check_file', return_value=True)
     def test_report_write_success(self, mock_check_file, mock_open):
         report = Report()
         report.generate_report = MagicMock(return_value="report")
         report.write({})
-        mock_open.assert_called_once()"""
+        mock_open.assert_called_once()
+        
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_report_get_file_success_provider(self, mock_get_top_directory):
         """Test getting file path for a Provider"""
@@ -296,7 +297,7 @@ class Tester(unittest.TestCase):
     def test_summary_report_init_success(self):
         """Test Summary Report initialization."""
         summary_report = SummaryReport()
-        self.assertEqual((summary_report.services, summary_report.report),
+        self.assertEqual((summary_report.services, summary_report.report), 
             ([], ""))
 
 
@@ -307,7 +308,7 @@ class Tester(unittest.TestCase):
         self.assertTrue(utils.confirmation(""))
         self.assertFalse(utils.confirmation(""))
 
-
+    
     """RANDOM_GENERATOR.PY"""
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_generate_id_provider(self, mock_get_top_directory):
