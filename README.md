@@ -23,3 +23,21 @@ $ python3 main.py
 $ python3 -m unittest main.py
 ```
 The program also may be run with the `--help` flag to check any command line arguments.
+
+## Invalid or Suspended User IDs ##
+**NOTE**: Members are in the ranges of 1-7 in the starting digit possition, Providers start with 8 and Managers start with 9.
+
+* Suspended - User ID that is temporarily disabled and can be renabled either by ChocAn IT or when a Member has paid dues.
+
+* Invalid - The User ID ***cannot*** ever be reused in the future as this status is to indicate that the ID has been essentially deleted from the system.
+
+List of "Suspended" or "Invalid" user IDs|
+------------------------------------------
+208281605 | Invalid |
+294811466 | Invalid |
+326194733 | Suspended |
+831410219 | Suspended |
+836251779 | Invalid |
+841330483 | Suspended |
+925747948 | Invalid |
+963818730 | Suspended |
