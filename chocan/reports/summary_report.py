@@ -1,7 +1,4 @@
 import datetime
-import json
-import re
-from pathlib import Path
 
 from chocan import utils
 from chocan.utils import Alignment
@@ -56,14 +53,6 @@ class SummaryReport(Report):
         self.report += f"Total providers:     {len(providers)}\n"
         self.report += f"Total consultations: {sum(consultations)}\n"
         self.report += f"Total fee:           ${'%.2f' % sum(fees)}\n"
-
-    @staticmethod
-    def get_week():
-        today = datetime.date.today()
-        monday = today - datetime.timedelta(days=today.weekday())
-
-        return [(monday + datetime.timedelta(days=d)).strftime("%Y%m%d")
-                for d in range(5)]
 
     @staticmethod
     def get_file():

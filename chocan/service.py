@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 
 from chocan import utils
+from chocan.person import Person
 
 
 class Service:
@@ -65,3 +66,18 @@ class Service:
 
         with open(path, "w") as file:
             json.dump(record, file, indent=4, sort_keys=False)
+
+    @staticmethod
+    def deserialize(json_string):
+        provider = Person(json_string["provider"])
+        member = Person(json_string["member"])
+
+        if not provider.load() or not member.load():
+            return False
+
+        return Service(datetime.strptime(json_string["date_provided"],
+                        "%m-%d-%Y"),
+                       provider,
+                       member,
+                       json_string["service_code"],
+                       json_string["comments"])
