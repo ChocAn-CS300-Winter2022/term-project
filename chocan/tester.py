@@ -1,8 +1,8 @@
 import argparse
-import json
 import random
 import unittest
-from unittest.mock import Mock, MagicMock, patch, mock_open
+
+from unittest.mock import MagicMock, patch, mock_open
 from datetime import datetime
 from pathlib import Path
 
