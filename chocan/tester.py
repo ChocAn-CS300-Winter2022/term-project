@@ -1,9 +1,7 @@
 import argparse
 import random
-from shutil import register_unpack_format
 import unittest
-from unittest.mock import Mock
-from unittest.mock import patch
+from unittest.mock import Mock, patch, mock_open
 from datetime import datetime
 from pathlib import Path
 
@@ -104,7 +102,7 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.confirmation', return_value = True)
     @patch('chocan.person')
-    def test_chocan_remove_user_pick_yes(self, mock_confirmation, mock_user):
+    def test_chocan_remove_user_pick_yes(self, mock_user, mock_confirmation):
         """Test Selecting to Remove User"""
         chocan = ChocAn()
 
@@ -115,7 +113,7 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.confirmation', return_value = False)
     @patch('chocan.person')
-    def test_chocan_remove_user_pick_no(self, mock_confirmation, mock_user):
+    def test_chocan_remove_user_pick_no(self, mock_user, mock_confirmation):
         """Test Selecting to Not Remove User"""
         chocan = ChocAn()
 
@@ -141,6 +139,44 @@ class Tester(unittest.TestCase):
         person.city, person.state, person.zip_code, person.status),
             ("", "", "", "", "", "", Person.Status.Valid))
 
+    @patch('json.dump')
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    @patch('chocan.utils.check_file', return_value=True)
+    def test_person_save_success(self, mock_check_file, mock_open, mock_dump):
+        """Test that saving person who exists succeeds"""
+        person = Person(id="999999999")
+        person.save()
+        mock_dump.assert_called_once()
+
+    @patch('json.dump')
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    @patch('chocan.utils.check_file', return_value=False)
+    def test_person_save_failure(self, mock_check_file, mock_open, mock_dump):
+        """Test that saving person who doesn't exist fails"""
+        person = Person(id="999999999")
+        person.save()
+        mock_dump.assert_not_called()
+
+    @patch('json.load', return_value={})
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    @patch('pathlib.Path.is_file', return_value=True)
+    def test_person_load_success(self, mock_is_file, mock_open, mock_load):
+        """Test that loading person who does exist succeeds"""
+        person = Person(id="999999999")
+        self.assertTrue(person.load())
+        self.assertTrue(person.load("123456789"))
+        mock_load.asset_called()
+
+    @patch('json.load', return_value={})
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    @patch('pathlib.Path.is_file', return_value=False)
+    def test_person_load_failure(self, mock_is_file, mock_open, mock_load):
+        """Test that loading person who doesn't exist fails"""
+        person = Person(id="999999999")
+        self.assertFalse(person.load())
+        self.assertFalse(person.load("123456789"))
+        mock_load.assert_not_called()
+
     def test_person_is_provider_success(self):
         """Test Person is_provider."""
         person = Person()
@@ -165,8 +201,7 @@ class Tester(unittest.TestCase):
         person.id = '800000000'
         self.assertFalse(person.is_manager())
 
-    @patch('chocan.utils.get_top_directory', 
-            return_value = Path("test"))
+    @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_person_get_file_success(self, mock_get_top_directory):
         """Test Person get_file"""
         actual_file_path = Person.get_file('123456789')
@@ -175,7 +210,6 @@ class Tester(unittest.TestCase):
 
 
     """SERVICE.PY"""
-   # @patch('datetime.now', return_value=10)
     def test_service_init_provided_datetime(self):
         """Test Service init with datetime provided"""
         date = datetime.today().date()
@@ -200,8 +234,9 @@ class Tester(unittest.TestCase):
             (date, provider, member, service_code, 
             ""))
 
-    @patch('json.dump', return_value=None)
-    def test_service_generate_record_success(self, mock_dump):
+    @patch('json.dump', return_value=True)
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    def test_service_generate_record_success(self, mock_open, mock_dump):
         """Test generating service record"""
         date = datetime.today().date()
         provider = Person()
@@ -259,6 +294,14 @@ class Tester(unittest.TestCase):
         summary_report = SummaryReport()
         self.assertEqual((summary_report.services, summary_report.report), 
             ([], ""))
+
+
+    """UTILS.PY"""
+    @patch('builtins.input', side_effect=["yes", "y", "no"])
+    def test_utils_confirmation_success(self, mock_input):
+        self.assertTrue(utils.confirmation(""))
+        self.assertTrue(utils.confirmation(""))
+        self.assertFalse(utils.confirmation(""))
 
     
     """RANDOM_GENERATOR.PY"""
