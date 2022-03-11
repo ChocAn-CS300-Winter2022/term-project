@@ -43,14 +43,22 @@ class ChocAn:
                 # Ask for ID
                 if command == "1":
                     id = input("Enter an ID: ")
-                    is_provider = id.startswith("8")
 
-                    if id not in self.users or not (is_provider or
-                        id.startswith("9")):
+                    if not id.startswith("8") and not id.startswith("9"):
                         print("Invalid ID. Please try again.")
-                    else:
-                        self.current_person = Person(id)
-                        self.menu.page = Menu.MenuPage.Main
+                        continue
+
+                    self.current_person = Person(id)
+
+                    if not self.current_person.load():
+                        print("Invalid ID. Please try again.")
+                        continue
+
+                    if self.current_person.status != Person.Status.Valid:
+                        print("Invalid ID. Please try again.")
+                        continue
+
+                    self.menu.page = Menu.MenuPage.Main
                 # Exit program
                 elif command == "0":
                     quit = True
