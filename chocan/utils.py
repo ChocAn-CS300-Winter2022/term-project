@@ -1,3 +1,6 @@
+import datetime
+import json
+import re
 from enum import Enum
 from pathlib import Path
 
@@ -110,3 +113,30 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
     except IndexError:
         print("Too many column names provided.")
         return ""
+
+def get_week():
+    today = datetime.date.today()
+    monday = today - datetime.timedelta(days=today.weekday())
+
+    return [(monday + datetime.timedelta(days=d)).strftime("%Y%m%d")
+            for d in range(5)]
+
+
+def get_weekly_records():
+    # Get the last week (Monday-Friday)
+    dates = get_week()
+    # Get all records in the "logs" folder
+    all_records = list((get_top_directory() / "restricted" /
+        "logs").iterdir())
+
+    # Get only the records for the week
+    r = re.compile(f"(" + "|".join(dates) + ")")
+    week_records = [file for file in all_records if r.search(file.name)]
+    loaded_records = []
+
+    # Load each record from JSON
+    for record in week_records:
+        with open(record, 'r') as file:
+            loaded_records.append(json.load(file))
+
+    return loaded_records

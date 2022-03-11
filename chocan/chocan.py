@@ -255,7 +255,7 @@ class ChocAn:
             provider,
             member,
             service_code,
-            comments).generate_record(self.provider_directory)
+            comments).generate_record()
 
         print(f"Fee: ${self.provider_directory[service_code]['fee']}")
 

@@ -41,12 +41,8 @@ class Service:
         print(f"Date:     {self.date_provided.strftime('%m-%d-%Y')}")
         print(f"Comments: {self.comments}")
 
-    def generate_record(self, provider_directory):
-        """Generate a record to write to the logs folder.
-
-        Args:
-            provider_directory (dict): provider directory loaded in ChocAn
-        """
+    def generate_record(self):
+        """Generate a record to write to the logs folder."""
         record = {
             "current_date": self.current_date.strftime("%m-%d-%Y %H:%M:%S"),
             "date_provided": self.date_provided.strftime("%m-%d-%Y"),
