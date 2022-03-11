@@ -390,14 +390,28 @@ class ChocAn:
         report.display(self.provider_directory)
 
     def generate_member_report(self):
-        # TODO: member report
-        #   Ask for member ID or all members
-        #   Gather records for ID or all from last week (regex)
-        #   Create new MemberReport() (or multiple if all)
-        #   Write to disk
-        pass
+        """Generate a member report for the last week from a member ID."""
+        id = input("Enter member ID: ")
+
+        if id not in self.users or id.startswith("8") or id.startswith("9"):
+            print("Invalid member ID.")
+            return
+
+        member = Person(id)
+        if not member.load():
+            return
+
+        records = utils.get_weekly_records()
+        member_records = [record for record in records
+                          if record["member"] == id]
+        services = [Service.deserialize(record) for record in member_records]
+
+        report = Report(services)
+        report.write(self.provider_directory)
+        report.display(self.provider_directory)
 
     def generate_provider_report(self):
+        """Generate a provider report for the last week from a provider ID."""
         # TODO: provider report
         #   Ask for provider/manager ID or all
         #   Gather records for ID or all from last week (regex)
