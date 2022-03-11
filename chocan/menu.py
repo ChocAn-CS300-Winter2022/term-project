@@ -62,7 +62,7 @@ class Menu:
             print("3) Modify user")
             print("0) Back")
         elif self.page == Menu.MenuPage.ModifyUser:
-            print("Modify User".center(67, "="))
+            print(" Modify User ".center(67, "="))
             print("1) Name")
             print("2) Address")
             print("3) City")
