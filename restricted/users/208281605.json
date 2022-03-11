@@ -5,5 +5,5 @@
     "city": "Long Beach",
     "state": "CA",
     "zip_code": "90802",
-    "status": 1
+    "status": -1
 }

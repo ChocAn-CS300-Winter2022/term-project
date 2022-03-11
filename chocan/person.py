@@ -57,6 +57,7 @@ class Person:
 
         with open(path, 'r') as file:
             self.__dict__.update(json.load(file))
+            self.status = Person.Status(self.status)
 
         return True
 
