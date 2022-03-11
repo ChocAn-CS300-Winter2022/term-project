@@ -115,6 +115,7 @@ def tabulate(col_names, row_tuples, col_alignments=[]):
         return ""
 
 def get_week():
+    """Gets the current week from Monday to Friday."""
     today = datetime.date.today()
     monday = today - datetime.timedelta(days=today.weekday())
 
@@ -123,6 +124,10 @@ def get_week():
 
 
 def get_weekly_records():
+    """Generates a list of records from the past week.
+
+    Returns:
+        list: list of records"""
     # Get the last week (Monday-Friday)
     dates = get_week()
     # Get all records in the "logs" folder
