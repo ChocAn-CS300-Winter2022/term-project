@@ -12,6 +12,7 @@ from chocan.reports.summary_report import SummaryReport
 from chocan.service import Service
 from chocan.utils import Alignment
 
+
 class ChocAn:
     def __init__(self):
         self.menu = Menu()
