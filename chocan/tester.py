@@ -1,7 +1,8 @@
 import argparse
+import json
 import random
 import unittest
-from unittest.mock import Mock, patch, mock_open
+from unittest.mock import Mock, MagicMock, patch, mock_open
 from datetime import datetime
 from pathlib import Path
 
@@ -100,27 +101,25 @@ class Tester(unittest.TestCase):
         self.assertEqual((chocan.menu.page, chocan.current_person, chocan.modified_user),
             (Menu.MenuPage.LogIn, None, None))
 
-    @patch('chocan.utils.confirmation', return_value = True)
+    @patch('chocan.utils.confirmation', return_value=True)
     @patch('chocan.person')
     def test_chocan_remove_user_pick_yes(self, mock_user, mock_confirmation):
         """Test Selecting to Remove User"""
         chocan = ChocAn()
-
         chocan.remove_user(mock_user)
+        
         mock_user.save.assert_called_once()
-
         self.assertEqual(mock_user.status, Person.Status.Invalid)
 
-    @patch('chocan.utils.confirmation', return_value = False)
+    @patch('chocan.utils.confirmation', return_value=False)
     @patch('chocan.person')
     def test_chocan_remove_user_pick_no(self, mock_user, mock_confirmation):
         """Test Selecting to Not Remove User"""
         chocan = ChocAn()
-
         mock_user.status = Person.Status.Valid
         chocan.remove_user(mock_user)
-        mock_user.save.assert_not_called()
 
+        mock_user.save.assert_not_called()
         self.assertEqual(mock_user.status, Person.Status.Valid)
 
 
@@ -245,14 +244,21 @@ class Tester(unittest.TestCase):
         service = Service(date, provider, member, service_code)
         service.generate_record({})
         mock_dump.assert_called_once()
-        #TODO: make it not actually call the dump method
+
 
     """REPORT.PY"""
     def test_report_init_success(self):
         """Test Report initialization."""
         report = Report()
         self.assertEqual((report.services, report.report), ([], ""))
-
+"""
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    @patch('chocan.utils.check_file', return_value=True)
+    def test_report_write_success(self, mock_check_file, mock_open):
+        report = Report()
+        report.generate_report = MagicMock(return_value="report")
+        report.write({})
+        mock_open.assert_called_once()"""
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_report_get_file_success_provider(self, mock_get_top_directory):
         """Test getting file path for a Provider"""
