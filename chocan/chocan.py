@@ -7,6 +7,7 @@ from chocan.menu import Menu
 from chocan.person import Person
 from chocan.random_generator import RandomGenerator
 from chocan.reports.report import Report
+from chocan.reports.provider_report import ProviderReport
 from chocan.reports.summary_report import SummaryReport
 from chocan.service import Service
 from chocan.utils import Alignment
@@ -412,9 +413,21 @@ class ChocAn:
 
     def generate_provider_report(self):
         """Generate a provider report for the last week from a provider ID."""
-        # TODO: provider report
-        #   Ask for provider/manager ID or all
-        #   Gather records for ID or all from last week (regex)
-        #   Create new ProviderReport() (or multiple if all)
-        #   Write to disk
-        pass
+        id = input("Enter provider ID: ")
+
+        if not id.startswith("8"):
+            print("Invalid provider ID.")
+            return
+
+        provider = Person(id)
+        if not provider.load():
+            return
+
+        records = utils.get_weekly_records()
+        provider_records = [record for record in records
+                            if record["provider"] == id]
+        services = [Service.deserialize(record) for record in provider_records]
+
+        provider_report = ProviderReport(services)
+        provider_report.write(self.provider_directory)
+        provider_report.display(self.provider_directory)
