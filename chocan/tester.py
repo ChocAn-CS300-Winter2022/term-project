@@ -278,15 +278,16 @@ class Tester(unittest.TestCase):
 
     @patch('chocan.utils.confirmation', return_value=True)
     def test_report_display_generate(self, mock_confirmation):
+        """Test that report will generate on request"""
         report = Report()
         report.generate_report = MagicMock(return_value="report")
         report.display("")
         report.generate_report.asset_called_with({})
         self.assertEqual(report.report, "")
         
-
     @patch('chocan.utils.confirmation', return_value=False)
     def test_report_display_no_generate(self, mock_confirmation):
+        """Test that report wont generate when one exists"""
         report = Report()
         report.generate_report = MagicMock(return_value="report")
         report.display("")
@@ -294,6 +295,7 @@ class Tester(unittest.TestCase):
         self.assertEqual(report.report, "")
 
     def test_report_display_success(self):
+        """Test that reports are displayed when one exists"""
         report = Report()
         report.report = "REPORT"
         report.generate_report = MagicMock(return_value="report")
@@ -347,6 +349,7 @@ class Tester(unittest.TestCase):
     """UTILS.PY"""
     @patch('builtins.input', side_effect=["yes", "y", "no"])
     def test_utils_confirmation_success(self, mock_input):
+        """Test that input is handled for confirmation"""
         self.assertTrue(utils.confirmation(""))
         self.assertTrue(utils.confirmation(""))
         self.assertFalse(utils.confirmation(""))
@@ -355,6 +358,7 @@ class Tester(unittest.TestCase):
     """RANDOM_GENERATOR.PY"""
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_generate_id_provider(self, mock_get_top_directory):
+        """Test that valid IDs are generated for a provider"""
         id_info = RandomGenerator.generate_id("providers")
         id = id_info["id"]
         expected_path = Path(f"test/restricted/users/{id}.json")
