@@ -4,5 +4,6 @@
     "address": "90296 Martinez Heights",
     "city": "Hermosa Beach",
     "state": "CA",
-    "zip_code": "90254"
+    "zip_code": "90254",
+    "status": 1
 }

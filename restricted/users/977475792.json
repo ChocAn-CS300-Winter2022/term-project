@@ -4,5 +4,6 @@
     "address": "79285 Laurie Plains",
     "city": "Beverly Hills",
     "state": "CA",
-    "zip_code": "90210"
+    "zip_code": "90210",
+    "status": 1
 }

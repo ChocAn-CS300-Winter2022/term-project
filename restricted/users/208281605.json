@@ -4,5 +4,6 @@
     "address": "9652 Bean Fort",
     "city": "Long Beach",
     "state": "CA",
-    "zip_code": "90802"
+    "zip_code": "90802",
+    "status": 1
 }

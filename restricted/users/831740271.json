@@ -4,5 +4,6 @@
     "address": "815 Barbara Pine Apt. 388",
     "city": "Pomona",
     "state": "CA",
-    "zip_code": "91766"
+    "zip_code": "91766",
+    "status": 1
 }

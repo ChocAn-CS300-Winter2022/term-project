@@ -4,5 +4,6 @@
     "address": "480 Patrick Mills",
     "city": "Los Angeles",
     "state": "CA",
-    "zip_code": "90012"
+    "zip_code": "90012",
+    "status": 1
 }

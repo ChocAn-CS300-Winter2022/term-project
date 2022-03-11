@@ -4,5 +4,6 @@
     "address": "95689 Davis Harbors Suite 728",
     "city": "Calabasas",
     "state": "CA",
-    "zip_code": "91302"
+    "zip_code": "91302",
+    "status": 1
 }

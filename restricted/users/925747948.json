@@ -4,5 +4,6 @@
     "address": "248 Herring Points Apt. 556",
     "city": "Malibu",
     "state": "CA",
-    "zip_code": "90265"
+    "zip_code": "90265",
+    "status": 1
 }

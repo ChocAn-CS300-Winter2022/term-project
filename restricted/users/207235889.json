@@ -4,5 +4,6 @@
     "address": "1061 Adrian Branch",
     "city": "Santa Monica",
     "state": "CA",
-    "zip_code": "90401"
+    "zip_code": "90401",
+    "status": 1
 }

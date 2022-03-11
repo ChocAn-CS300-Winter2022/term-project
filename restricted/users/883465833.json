@@ -4,5 +4,6 @@
     "address": "4714 N. Orlando Ave., Apt. 5",
     "city": "West Hollywood",
     "state": "CA",
-    "zip_code": "90048"
+    "zip_code": "90048",
+    "status": 1
 }

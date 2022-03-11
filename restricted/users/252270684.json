@@ -4,5 +4,6 @@
     "address": "094 Steven Creek Apt. 134",
     "city": "Compton",
     "state": "CA",
-    "zip_code": "90220"
+    "zip_code": "90220",
+    "status": 1
 }

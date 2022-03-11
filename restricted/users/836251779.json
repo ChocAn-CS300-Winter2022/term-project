@@ -4,5 +4,6 @@
     "address": "93021 Ellis Fords",
     "city": "Montebello",
     "state": "CA",
-    "zip_code": "90640"
+    "zip_code": "90640",
+    "status": 1
 }

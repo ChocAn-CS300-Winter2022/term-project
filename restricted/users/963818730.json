@@ -4,5 +4,6 @@
     "address": "44450 Cory Trail Suite 388",
     "city": "Malibu",
     "state": "CA",
-    "zip_code": "90265"
+    "zip_code": "90265",
+    "status": 1
 }

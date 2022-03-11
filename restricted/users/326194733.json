@@ -4,5 +4,6 @@
     "address": "408 Thompson Burg Apt. 925",
     "city": "Santa Monica",
     "state": "CA",
-    "zip_code": "90401"
+    "zip_code": "90401",
+    "status": 1
 }

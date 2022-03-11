@@ -4,5 +4,6 @@
     "address": "41 W. 16th St.",
     "city": "San Bernardino",
     "state": "CA",
-    "zip_code": "92401"
+    "zip_code": "92401",
+    "status": 1
 }
