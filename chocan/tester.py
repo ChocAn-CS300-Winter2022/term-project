@@ -240,7 +240,7 @@ class Tester(unittest.TestCase):
         member = Person()
         service_code = "999999"
         service = Service(date, provider, member, service_code)
-        service.generate_record({})
+        service.generate_record() #{}
         mock_dump.assert_called_once()
 
 
@@ -253,11 +253,54 @@ class Tester(unittest.TestCase):
     @patch('builtins.open', new_callable=mock_open, read_data="data")
     @patch('chocan.utils.check_file', return_value=True)
     def test_report_write_success(self, mock_check_file, mock_open):
+        """Test that reports can be written successfully"""
         report = Report()
         report.generate_report = MagicMock(return_value="report")
+        report.path = MagicMock(Path("test"))
         report.write({})
         mock_open.assert_called_once()
+
+    @patch('builtins.open', new_callable=mock_open, read_data="data")
+    @patch('chocan.utils.check_file', return_value=False)
+    def test_report_write_failure(self, mock_check_file, mock_open):
+        """Test that reports can be written successfully"""
+        member = Person(id="100000000")
+        provider = Person(id="800000000")
+        service = [Service("2020-03-12", member, provider, "888888")]
+
+        report = Report(service)
+        report.generate_report = MagicMock(return_value="report")
+        report.path = MagicMock(Path("test"))
+
+        report.write({})
+
+        mock_open.assert_not_called()
+
+    @patch('chocan.utils.confirmation', return_value=True)
+    def test_report_display_generate(self, mock_confirmation):
+        report = Report()
+        report.generate_report = MagicMock(return_value="report")
+        report.display("")
+        report.generate_report.asset_called_with({})
+        self.assertEqual(report.report, "")
         
+
+    @patch('chocan.utils.confirmation', return_value=False)
+    def test_report_display_no_generate(self, mock_confirmation):
+        report = Report()
+        report.generate_report = MagicMock(return_value="report")
+        report.display("")
+        report.generate_report.asset_not_called()
+        self.assertEqual(report.report, "")
+
+    def test_report_display_success(self):
+        report = Report()
+        report.report = "REPORT"
+        report.generate_report = MagicMock(return_value="report")
+        report.display("")
+        report.generate_report.assert_not_called()
+        self.assertEqual(report.report, "")
+
     @patch('chocan.utils.get_top_directory', return_value=Path("test"))
     def test_report_get_file_success_provider(self, mock_get_top_directory):
         """Test getting file path for a Provider"""
