@@ -112,8 +112,10 @@ class ChocAn:
 
                     user = Person(id)
                     # Back to terminal selection if load fails
-                    if user.load():
+                    if user.load() and user.status != Person.Status.Invalid:
                         self.remove_user(user)
+                    else:
+                        print("Invalid ID.")
                 # Modify user menu
                 elif command == "3":
                     id_valid = False
@@ -136,8 +138,11 @@ class ChocAn:
 
                     self.modified_user = Person(id)
                     # Back to terminal selection if load fails
-                    if self.modified_user.load():
+                    if self.modified_user.load() and \
+                        self.modified_user.status == Person.Status.Valid:
                         self.menu.page = Menu.MenuPage.ModifyUser
+                    else:
+                        print("Invalid ID.")
                 # Back to terminal selection
                 elif command == "0":
                     self.menu.page = Menu.MenuPage.Main
