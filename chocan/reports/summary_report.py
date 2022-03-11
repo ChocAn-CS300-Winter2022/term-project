@@ -18,22 +18,7 @@ class SummaryReport(Report):
         """
         self.report = ""
         self.path = self.get_file()
-
-        # Get the last week (Monday-Friday)
-        dates = self.get_week()
-        # Get all records in the "logs" folder
-        all_records = list((utils.get_top_directory() / "restricted" /
-            "logs").iterdir())
-
-        # Get only the records for the week
-        r = re.compile(f"(" + "|".join(dates) + ")")
-        week_records = [file for file in all_records if r.search(file.name)]
-        loaded_records = []
-
-        # Load each record from JSON
-        for record in week_records:
-            with open(record, 'r') as file:
-                loaded_records.append(json.load(file))
+        loaded_records = utils.get_weekly_records()
 
         # Get each provider and service as a tuple
         services = [(service["provider"], service["service_code"])
