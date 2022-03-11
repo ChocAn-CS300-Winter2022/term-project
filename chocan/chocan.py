@@ -311,6 +311,7 @@ class ChocAn:
         new_user.save()
 
         if utils.confirmation(f"Do you want to modify {name}?"):
+            self.modified_user = new_user
             self.menu.page = Menu.MenuPage.ModifyUser
 
     def remove_user(self, user):
@@ -344,6 +345,7 @@ class ChocAn:
             if len(new_name) > 25:
                 print("User's new name must be 25 characters or less.")
             else:
+                print(f"Changed name {self.modified_user.name} to {new_name}.")
                 self.modified_user.name = new_name
                 self.modified_user.save()
         # Address
@@ -352,6 +354,8 @@ class ChocAn:
             if len(new_address) > 25:
                 print("User's new address must be 25 characters or less.")
             else:
+                print(f"Changed address {self.modified_user.address} to "
+                      f"{new_address}.")
                 self.modified_user.address = new_address
                 self.modified_user.save()
         # City
@@ -360,6 +364,7 @@ class ChocAn:
             if len(new_city) > 14:
                 print("User's new city must be 14 characters or less.")
             else:
+                print(f"Changed city {self.modified_user.city} to {new_city}.")
                 self.modified_user.city = new_city
                 self.modified_user.save()
         # State
@@ -368,6 +373,8 @@ class ChocAn:
             if len(new_state) != 2:
                 print("User's new state must be 2 characters exactly.")
             else:
+                print(f"Changed state {self.modified_user.state} to "
+                      f"{new_state}.")
                 self.modified_user.state = new_state
                 self.modified_user.save()
         # Zip code
@@ -376,6 +383,8 @@ class ChocAn:
             if len(new_zip) != 5:
                 print("User's new zip code must be 5 characters exactly.")
             else:
+                print(f"Changed zip code {self.modified_user.zip_code} to "
+                      f"{new_zip}.")
                 self.modified_user.zip_code = new_zip
                 self.modified_user.save()
         # Back to user information
